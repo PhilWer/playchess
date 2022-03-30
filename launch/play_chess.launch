@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<!-- ARGS and PARAMS -->
+	<!-- load the proper config file  -->
+	<arg name = "config" default = "simulation" />
+	<param name = "tiago_playchess/config" type = "str" value = "$(find tiago_playchess)/scripts/config/$(arg config)_config.yaml" />
+	<param name = "tiago_playchess/simul_config" type = "str" value = "$(find tiago_playchess)/config/simul_config.yaml" />
+	<param name = "tiago_playchess/simul_config_not_transformed" type = "str" value = "$(find tiago_playchess)/config/simul_config_not_transformed.yaml" />
+	<param name = "tiago_playchess/chessboard_vertices" type = "str" value = "$(find tiago_playchess)/config/chessboard_vertices.yaml" />
+	<param name = "tiago_playchess/chessboard_vertices_not_transformed" type = "str" value = "$(find tiago_playchess)/config/chessboard_vertices_not_transformed.yaml" />
+	<param name = "tiago_playchess/image_vertices" type = "str" value = "$(find tiago_playchess)/config/image_vertices.yaml" />
+	<param name = "tiago_playchess/image_centroids" type = "str" value = "$(find tiago_playchess)/config/image_centroids.yaml" />
+	<param name = "tiago_playchess/z_coord_chessboard_mean" type = "str" value = "$(find tiago_playchess)/config/z_coord_chessboard_mean.yaml" />
+	<param name = "tiago_playchess/aruco_config" type = "str" value = "$(find tiago_playchess)/config/aruco_config.yaml" />
+	<param name = "tiago_playchess/clock_pose_file" type = "str" value = "$(find tiago_playchess)/config/clock_pose_file.yaml" />
+	<param name = "tiago_playchess/box_pose_file" type = "str" value = "$(find tiago_playchess)/config/box_pose_file.yaml" />
+
+
+	<!-- Rviz config (i.e. what is displayed by default in Rviz) -->
+	<arg name="command_args" value="-d $(find tiago_moveit_tutorial)/launch/grasping.rviz" />
+
+	<!-- Import params for the playmotion movements-->
+	<rosparam command="load" file="$(find tiago_playchess)/config/playmotion_movements.yaml" />
+  
+	<!-- load yaml file(s) with the recorded movements to play with Playmotion
+	<rosparam file = "$(find tiago_playchess)/config/my_movements.yaml" />
+	TODO I PARAMTERI CHE HO SALVATO IN .PY LI IMPORTO QUI?? -->
+  
+	<!-- NODES -->
+	<!-- setup the Gazebo world if the code is running in simulation PER ORA LANCIO IO PRIMA LA SIMULAZIONE
+	<group if = "$(eval config == 'simulation')">
+		<include file = "$(find tiago_playchess)/launch/chess_simulation.launch">
+		</include>
+	</group>
+	-->
+
+	<!-- launch rviz with a proper config -->
+	<!-- <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen"/> -->
+	<!-- <node name="pick_demo_rviz" pkg="rviz" type="rviz" args="-d $(find tiago_pick_demo)/config/rviz/tiago_pick_demo.rviz" /> -->
+
+	<!-- look for the ArUco detection launch file NON SO SE SERVE QUESTA COSA
+	<param name = "tiago_grasp/aruco_launch_file" type = "str" value = "$(find tiago_playchess)/launch/multi_detector.launch" />
+	-->
+
+	<!-- launch the node that actually makes the robot move or simulates the movements (grasp_piece_simulation.py)-->
+	<node pkg = "tiago_playchess" type = "play_chessPROVA.py" name = "play_chess" required = "false" output = "screen"/>
+		<param name="back_home" value="false"/>
+
+</launch>

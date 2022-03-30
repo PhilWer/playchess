@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	
+	<!-- Args and params-->
+	<arg name="rviz"  default="false"/>
+	<arg name="command_args" value="-d $(find tiago_moveit_tutorial)/launch/grasping.rviz" />
+	<rosparam file="$(find tiago_moveit_tutorial)/config/tiago_octomap_motions.yaml" />
+
+	<!-- Nodes -->
+	<!-- Trigger grasping without looking for markers. Code to run in simulation with known world measures -->
+	<node pkg = "tiago_playchess" type = "grasp_piece.py" name = "grasp_piece" required = "false" output = "screen"/>
+		<rosparam file = "$(find tiago_playchess)/config/tiago_playchess.yaml" />
+		<rosparam file = "$(find tiago_playchess)/config/offset_movement.yaml" />
+		<param name="back_home" value="false"/>
+
+
+	<!-- Trigger grasping after recognizing ARUCO markers. Code to run in simulation with markers.
+	<node pkg = "tiago_playchess" type = "grasp_piece_aruco.py" name = "grasp_piece_aruco" required = "false" output = "screen"/>
+		<rosparam file = "$(find tiago_playchess)/config/tiago_playchess.yaml" />
+		<rosparam file = "$(find tiago_playchess)/config/offset_movement.yaml" />
+		<param name="back_home" value="false"/>
+	-->
+	<!-- Launch Rviz 
+	<group if="$(arg rviz)">
+		<node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen"/>
+	</group>
+	-->
+	<group if="$(arg rviz)">
+		<node name="pick_demo_rviz" pkg="rviz" type="rviz" args="-d $(find tiago_pick_demo)/config/rviz/tiago_pick_demo.rviz" />
+	</group>
+	
+</launch>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch> 
+
+ <!-- launch three nodes for the detection of a specific ArUco marker -->
+ <arg name="marker100Id"        default="100"/>    <!-- 671 0 582 per la simulazione -->
+ <arg name="marker100Size"      default="0.05"/>    <!-- in m -->
+ <arg name="marker100Name"      default="clock"/>
+
+ <arg name="marker300Id"        default="300"/>
+ <arg name="marker300Size"      default="0.05"/>    <!-- in m -->
+ <arg name="marker300Name"      default="box"/>
+ 
+ <node pkg = "aruco_ros" type = "single"  name = "aruco_single100"> <!-- consider naming it name="aruco_$(marker1Name)" -->
+      <remap from = "/camera_info"       to = "/xtion/rgb/camera_info" />
+      <remap from = "/image"             to = "/xtion/rgb/image_rect_color" />
+      <param name = "image_is_rectified" value = "True"/>
+      <param name = "marker_size"        value = "$(arg marker100Size)"/>
+      <param name = "marker_id"          value = "$(arg marker100Id)"/>
+      <param name = "reference_frame"    value = "/base_footprint"/>   <!-- frame in which the marker pose will be expressed -->
+      <param name = "camera_frame"       value = "xtion_rgb_optical_frame"/>
+      <param name = "marker_frame"       value = "$(arg marker100Name)_frame" />
+      <param name = "corner_refinement"  value = "SUBPIX" />
+  </node>
+
+  <node pkg = "aruco_ros" type = "single"  name = "aruco_single300">
+      <remap from = "/camera_info"       to = "/xtion/rgb/camera_info" />
+      <remap from = "/image"             to = "/xtion/rgb/image_rect_color" />
+      <param name = "image_is_rectified" value = "True"/>
+      <param name = "marker_size"        value = "$(arg marker300Size)"/>
+      <param name = "marker_id"          value = "$(arg marker300Id)"/>
+      <param name = "reference_frame"    value = "/base_footprint"/>   <!-- frame in which the marker pose will be expressed -->
+      <param name = "camera_frame"       value = "xtion_rgb_optical_frame"/>
+      <param name = "marker_frame"       value = "$(arg marker300Name)_frame" />
+      <param name = "corner_refinement"  value = "SUBPIX" />
+  </node>
+
+  <node pkg = "tiago_playchess" type = "aruco_detection.py" name = "aruco_detection" required = "false" output = "screen"/>
+
+</launch>

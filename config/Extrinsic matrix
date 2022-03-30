@@ -1,0 +1,87 @@
+EXTRINSIC MATRIX FROM '/xtion_rgb_optical_frame' TO '/base_footprint'
+
+- Translation: [0.040, 0.934, 0.957]
+- Rotation: in Quaternion [-0.675, 0.677, -0.202, -0.215]
+            in RPY (radian) [3.122, -0.598, -1.568]
+            in RPY (degree) [178.855, -34.289, -89.840]
+
+
+
+
+ROSTOPIC ECHO /xtion/depth_registered/camera_info
+
+header: 
+  seq: 3713
+  stamp: 
+    secs: 1637170559
+    nsecs: 572713588
+  frame_id: "xtion_rgb_optical_frame"
+height: 480
+width: 640
+distortion_model: "plumb_bob"
+D: [0.02952962945813085, -0.06307880579866319, -0.001526273265849058, -0.009162056418683485, 0.0]
+K: [523.2994491601762, 0.0, 312.0471722095908, 0.0, 524.1979376240457, 249.9013550067579, 0.0, 0.0, 1.0]
+R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+P: [523.8445434570312, 0.0, 306.4158560291689, 0.0, 0.0, 529.4002685546875, 249.3343607262104, 0.0, 0.0, 0.0, 1.0, 0.0]
+binning_x: 0
+binning_y: 0
+roi: 
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: False
+
+
+
+
+
+ROSTOPIC ECHO /xtion/depth/camera_info
+
+  header: 
+  seq: 101
+  stamp: 
+    secs: 1637170656
+    nsecs: 486288844
+  frame_id: "xtion_rgb_optical_frame"
+height: 480
+width: 640
+distortion_model: "plumb_bob"
+D: [0.02952962945813085, -0.06307880579866319, -0.001526273265849058, -0.009162056418683485, 0.0]
+K: [523.2994491601762, 0.0, 312.0471722095908, 0.0, 524.1979376240457, 249.9013550067579, 0.0, 0.0, 1.0]
+R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+P: [523.8445434570312, 0.0, 306.4158560291689, 0.0, 0.0, 529.4002685546875, 249.3343607262104, 0.0, 0.0, 0.0, 1.0, 0.0]
+binning_x: 0
+binning_y: 0
+roi: 
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: False
+
+
+ROSTOPIC ECHO /xtion/rgb/camera_info
+
+  header: 
+  seq: 33
+  stamp: 
+    secs: 1637170698
+    nsecs: 317901334
+  frame_id: "xtion_rgb_optical_frame"
+height: 480
+width: 640
+distortion_model: "plumb_bob"
+D: [0.02952962945813085, -0.06307880579866319, -0.001526273265849058, -0.009162056418683485, 0.0]
+K: [523.2994491601762, 0.0, 312.0471722095908, 0.0, 524.1979376240457, 249.9013550067579, 0.0, 0.0, 1.0]
+R: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+P: [523.8445434570312, 0.0, 306.4158560291689, 0.0, 0.0, 529.4002685546875, 249.3343607262104, 0.0, 0.0, 0.0, 1.0, 0.0]
+binning_x: 0
+binning_y: 0
+roi: 
+  x_offset: 0
+  y_offset: 0
+  height: 0
+  width: 0
+  do_rectify: False
+

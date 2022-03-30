@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>  
+
+	<!-- launch the node to manage the joystick commands in the different operational states -->
+	<node pkg = "tiago_playchess" type = "chessboard_pointcloud.py" name = "chessboard_pointcloud" required = "false" output = "screen"/>
+
+
+</launch>

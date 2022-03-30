@@ -1,0 +1,15 @@
+<launch>
+
+<arg name = 'rgb_topic' value = '/xtion/rgb/image_rect_color'/> 
+<!-- alternatives: /xtion/rgb/image_raw -->
+
+<arg name = 'depth_topic' value = '/xtion/depth_registered/image'/>
+<!-- alternatives: 	/xtion/depth_registered/image_raw -->
+
+<arg name = 'img_save_path' default = '$(find tiago_playchess)/pcd_and_image'/>
+<arg name = 'pcd_save_path' default = '$(find tiago_playchess)/pcd_and_image' />
+
+<node pkg = 'tiago_playchess' name = 'rgbd_saver' type = 'img_saver.py' output = 'screen' args = '$(arg img_save_path)'/>
+<node pkg = 'tiago_playchess' name = 'pcd_saver' type = 'pcd_saver_loader.py' output = 'screen' args = '$(arg pcd_save_path)'/>
+
+</launch>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+	<!-- ARGS and PARAMS -->
+	<!-- load the proper config file  -->
+	<arg name = "config" default = "standard" />
+	<param name = "tiago_playchess/config" type = "str" value = "$(find tiago_playchess)/scripts/config/$(arg config)_config.yaml" />
+	<param name = "tiago_playchess/simul_config" type = "str" value = "$(find tiago_playchess)/config/simul_config.yaml" />
+	<param name = "tiago_playchess/simul_config_not_transformed" type = "str" value = "$(find tiago_playchess)/config/simul_config_not_transformed.yaml" />
+	<param name = "tiago_playchess/chessboard_vertices" type = "str" value = "$(find tiago_playchess)/config/chessboard_vertices.yaml" />
+	<param name = "tiago_playchess/chessboard_vertices_not_transformed" type = "str" value = "$(find tiago_playchess)/config/chessboard_vertices_not_transformed.yaml" />
+	<param name = "tiago_playchess/z_coord_chessboard_mean" type = "str" value = "$(find tiago_playchess)/config/z_coord_chessboard_mean.yaml" />
+	<param name = "tiago_playchess/clock_pose_file" type = "str" value = "$(find tiago_playchess)/config/clock_pose_file.yaml" />
+	<param name = "tiago_playchess/box_pose_file" type = "str" value = "$(find tiago_playchess)/config/box_pose_file.yaml" />
+
+	<!-- Rviz config (i.e. what is displayed by default in Rviz) -->
+	<arg name="command_args" value="-d $(find tiago_playchess)/rviz/tiago_chess.rviz" />
+
+	<!-- Import params for the playmotion movements-->
+	<rosparam command="load" file="$(find tiago_playchess)/config/playmotion_movements.yaml" />
+  	
+	<!-- Set the serial port parameters -->
+	<arg name = "port" 		default = "/dev/ttyUSB0" />
+	<arg name = "baud" 		default = "57600" />
+
+	<!-- load yaml file(s) with the recorded movements to play with Playmotion
+	<rosparam file = "$(find tiago_playchess)/config/my_movements.yaml" />
+	-->
+  
+	<!-- NODES -->
+
+	<!-- launch rviz with a proper config -->
+	<!--<node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false" args="$(arg command_args)" output="screen"/>-->
+
+	<!-- launch the node to manage the different operational states -->
+	<node pkg = "tiago_playchess" type = "play_chess.py" name = "play_chess" required = "false" output = "screen"/>
+
+	<!-- launch the node to manage the joystick commands in the different operational states -->
+	<node pkg = "tiago_playchess" type = "joystick_command.py" name = "joystick_command" required = "false" output = "screen"/>
+
+	<!-- launch the GUI -->
+	<node pkg = "chess_gui" type = "play_chess_gui.py" name = "play_chess_gui" required = "false" output = "screen"/> <!-- InitializationWindow.py -->
+
+	<!-- launch the node to read the serial port connected to the pushbutton -->
+	<node pkg = "rosserial_python" type = "serial_node.py" name = "serial_node" args ="_port:=$(arg port) _baud:=$(arg baud)" required = "false" output = "screen"/>
+
+
+</launch>
