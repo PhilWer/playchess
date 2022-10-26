@@ -17,7 +17,11 @@
 
 	<!-- Import params for the playmotion movements-->
 	<rosparam command="load" file="$(find tiago_playchess)/config/playmotion_movements.yaml" />
-  
+  	
+	<!-- Set the serial port parameters -->
+	<arg name = "port" 		default = "/dev/ttyUSB0" />
+	<arg name = "baud" 		default = "57600" />
+
 	<!-- load yaml file(s) with the recorded movements to play with Playmotion
 	<rosparam file = "$(find tiago_playchess)/config/my_movements.yaml" />
 	-->
@@ -37,7 +41,7 @@
 	<node pkg = "chess_gui" type = "play_chess_gui_pronto.py" name = "play_chess_gui_pronto" required = "false" output = "screen"/> <!-- InitializationWindow.py -->
 
 	<!-- launch the node to read the serial port connected to the pushbutton -->
-	<node pkg = "rosserial_python" type = "serial_node.py" name = "serial_node" required = "false" output = "screen"/>
+	<node pkg = "rosserial_python" type = "serial_node.py" name = "serial_node" args ="_port:=$(arg port) _baud:=$(arg baud)" required = "false" output = "screen"/>
 
 	<node pkg = "tiago_playchess" type = "CV_move_recognition.py" name = "CV" required = "false" output = "screen"/>
 

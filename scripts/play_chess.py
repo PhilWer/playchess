@@ -1,40 +1,38 @@
 #!/usr/bin/env python
-#Script to make TIAGo grasp pieces on the chess board
+# Script to make TIAGo grasp pieces on the chess board
 
-#Import ROS libraries
+# Import ROS libraries
 import rospy, roslaunch, rosnode
 import moveit_commander
 
-#Import Python libraries
+# Import Python libraries
 import sys
 import yaml
 import math
 from time import time
 
-#Import ROS messages
-#from actionlib import SimpleActionClient, SimpleActionServer
+# Import ROS messages
 from geometry_msgs.msg import Quaternion, PointStamped, Pose, Point
 from std_msgs.msg import Bool, Int16, String
 from std_srvs.srv import Empty
 from moveit_commander import PlanningSceneInterface
 
-#My scripts
+# My scripts
 import config as cfg #real_config
+import armies as army
 import roslauncher as roslauncher
-#from manual_navigation import ManualNavigation
 from errors import ArucoException, PlanningException, StraightMovementError
-##from aruco_detection import Aruco
 from color import Color
 from grasp_piece import Grasping
-#from chessboard_pointcloud import PlanningScene
-#from CV_move_recognition import DepthProcessing
 
 PACKAGE_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
 imported_configurations = PACKAGE_DIR + '/scripts/config/simulation_config.yaml'
 
-ready = False #True if segmentation and search have been already performed. False otherwise. TOCHANGE
+### TODO: set from launch
+ready = True # True if segmentation and search have been already performed, False otherwise
 
-#Callbacks definition
+# Callbacks definition
+### TODO: move into class to avoid global variables
 def Callback_State(data):
     state.data = data.data
 
@@ -50,7 +48,8 @@ def CallbackEndSquare(data):
 
 def CallbackPushbutton(data):
 	if data and state.data == 14:
-		rospy.loginfo("The button has been pushed, so the opponent move has been executed. Start looking for the just executed move.")
+		rospy.loginfo("The button has been pushed, so the opponent move has been executed." + 
+					  " Start looking for the just executed move.")
 		state_publisher.publish(15)
 
 def CallbackSegmentAgain(data):
@@ -79,6 +78,14 @@ def CallbackEnPassantSquare(data):
 	print('EN PASSANT SQUARE: ' + str(en_passant_square))
 
 
+def squares_from_rows(rows):	### TODO: use instead of hardcoding
+	'''
+	rows 	[int list] index of the rows
+	----------
+	squares [str list] squares in the given rows (letter are lowercase)
+	'''
+	return [chr(97 + i) + str(row) for row in rows for i in range(8)]	# chr(97) -> 'a'
+
 def Color_Callback(data):
 		global color
 		global last_squares
@@ -87,21 +94,29 @@ def Color_Callback(data):
 		color = data.data
 		if color == 'white':
 			squares_to_index = cfg.squares_to_index_white
-			last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7']
-			first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2']
+			last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+							'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+						   ]
+			first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+							 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
+							]
 		elif color == 'black':
 			squares_to_index = cfg.squares_to_index_black
-			last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2']
-			first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7']
+			last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+							'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'
+						   ]
+			first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+							 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+							]
 
 def Move_the_arm_Callback(data):
 		if data:
-			#grasper = Grasping()
-			grasper.look_up() #Look up to avoid collisions head-arm
+			### NOTE: the look_up and look_down movements are TIAGo-specific
+			grasper.look_up() # look up to avoid head-arm collisions 
 			time.sleep(2)
-			grasper.move_arm_joint(0.471)
+			grasper.move_arm_joint(0.471)	### TODO: set a rest pose from launch file
 			time.sleep(2)
-			grasper.look_down() #Look down at the chessboard
+			grasper.look_down() # look down at the chessboard
 
 
 
@@ -115,20 +130,28 @@ if ready:
 		color = configurazioni.get('color')
 	if color == 'white':
 		squares_to_index = cfg.squares_to_index_white
-		last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7']
-		first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2']
+		last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+						'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+					   ]
+		first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+						 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
+						]
 	elif color == 'black':
 		squares_to_index = cfg.squares_to_index_black
-		last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2']
-		first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7']
+		last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+						'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
+					   ]
+		first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+						 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+						]
 
-#Starts a new node
+# Starts a new node
 rospy.init_node('play_chess', anonymous = True)
 
-#Publishers initialization
+# Publishers initialization
 state_publisher = rospy.Publisher('/state', Int16, queue_size = 10)
 
-#Subscribers initialization
+# Subscribers initialization
 rospy.Subscriber("/state", Int16, Callback_State)
 rospy.Subscriber('/start_square', String, CallbackStartSquare)
 rospy.Subscriber('/end_square', String, CallbackEndSquare)
@@ -141,41 +164,42 @@ rospy.Subscriber("/color", String, Color_Callback)
 rospy.Subscriber("/move_the_arm", Bool, Move_the_arm_Callback)
 
 
-#Messages initialization
+# Messages initialization
 state = Int16()
 state.data = 0
 
 en_passant_square = 'none'
 
-#Flags initialization
+# Flags initialization
 segmentation_not_launched = True
 aruco_detector_not_launched = True
 CV_launcher_not_launched = True
 chess_move_not_exectuted_yet = True
 pc_saver_not_launched = True
 
-#Parameters loading
+# Parameters loading
 z_coord_chessboard_mean_file = rospy.get_param('/tiago_playchess/z_coord_chessboard_mean')
 clock_pose_file = rospy.get_param('/tiago_playchess/clock_pose_file')
 box_pose_file = rospy.get_param('/tiago_playchess/box_pose_file')
 simul_config = rospy.get_param('/tiago_playchess/simul_config')
 
 class Playing:
-#Class with functions to make TIAGo wait for the move, to tell him what to move and, finally, to make him perform the move.
+# Class with functions to make TIAGo wait for the move, to tell him what to move and, finally, 
+# to make him perform the move.
 
 	def __init__(self):
-		#Initialize a MoveIt commander
+		# Initialize a MoveIt commander
 		moveit_commander.roscpp_initialize(sys.argv)
-		#MoveIt utilities
+		# MoveIt utilities
 		self.motions = Grasping()
 
-		#Subscribers initialization
+		# Subscribers initialization
 		#rospy.Subscriber("/move_the_arm", Bool, self.Move_the_arm_Callback)
 
-		#Define TIAGo interfaces and commanders for each group of the robot 
-		self.scene = moveit_commander.PlanningSceneInterface() #The interface with the world surrounding the robot		
+		# Define the interface with the robot's representation of the surrounding environment 
+		self.scene = moveit_commander.PlanningSceneInterface() 		
 
-		#Import pieces characteristics
+		# Import pieces characteristics
 		self.pawn = cfg.pawn
 		self.rook = cfg.rook
 		self.bishop = cfg.bishop
@@ -183,19 +207,20 @@ class Playing:
 		self.queen = cfg.queen
 		self.knight = cfg.knight
 
-		#Load configurations
+		# Load configurations
 		self.config_file = rospy.get_param('/tiago_playchess/config')		
 		with open(self.config_file) as file:
 			self.config = yaml.load(file)
 
-		#Load build/clear scene and octomap configurations
-		self.time_limit = self.config.get('time_limit', 3) #Maximum time to wait when looking for the object or for ArUco markers
-		self.clear_all = self.config.get('clear_octomap', True) #Clear the octomap at the end of the task (defaulted to False)
+		# Maximum time to wait when looking for the object or for ArUco markers
+		self.time_limit = self.config.get('time_limit', 3)
+		# Wheter to clear the octomap or not at the end of the task (defaulted to False) ### TOFIX
+		self.clear_all = self.config.get('clear_octomap', True) 
 
-		#Load parameters regarding the chessboard
+		# Load parameters regarding the chessboard
 		self.pieces_coordinates = cfg.pieces_coordinates
 
-		#Directory of the live chessboard situation
+		# Directory of the live chessboard situation
 		self.dir_live_chessboard_situation = PACKAGE_DIR + "/scripts/live_chessboard_situation.yaml"
 
 		self.columns = cfg.columns_explicit
@@ -211,155 +236,139 @@ class Playing:
 		exception_1_flag = False
 		exception_2_flag = False
 		exception_3_flag = False
-		which_error = 1 #1 if the error comes from straight_eef_movement (highering or lowering the gripper), 2 if it comes from straight_movements_chessboard (movements to reach squares)
-		#Execution of a complete move: a simple one or taking a piece.
-		#Load the live chessboard situation
+		which_error = 1 # 1. if the error comes from straight_eef_movement (i.e. highering or 
+						#    lowering the gripper) 
+						# 2. if it comes from straight_movements_chessboard (i.e. movements to 
+						#    reach squares)
+		# Execution of a complete move: a simple one or taking a piece.
+		# Load the live chessboard situation
 		with open(self.dir_live_chessboard_situation, 'rb') as live_file:
 			self.live_chessboard_situation = yaml.load(live_file.read())
 
 		try:
+			'''
+			### TODO: create a separate file `armies.py`. Create two dictionaries (`white` and
+					  `black`). For each army, define:
+						- close_squares
+						- far_squares
+						- start/end squares for long and short castle
+			'''
 			if start_square == 'short' or start_square == 'long': #Castle happened.
 				rospy.loginfo(str(start_square) + ' castle happening')
 				offset_start_place = 0.10
 				offset_end_place = 0.10
 				self.tilt = False
+
 				if color == 'white':
-					if start_square == 'short': #Implement short castle move for white.
-						#Move the king
-						piece = 'king_e1'
-						self.motions.gripper_over_piece('e1', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper								
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 2
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'g1', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('g1') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
-
-						#Move the rook
-						piece = 'rook_h1'
-						self.motions.gripper_over_piece('h1', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 3
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'f1', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('f1') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
-
-						#click the clock
-						self.motions.gripper_over_clock(clock_pose, z_coord_chessboard)
-						self.motions.click_clock(self.scene, clock_pose)
-
-					elif start_square == 'long': #Implement long castle move for white.
-						#Move the king
-						piece = 'king_e1'
-						self.motions.gripper_over_piece('e1', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 4
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'c1', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('c1') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
-
-						#Move the rook
-						piece = 'rook_a1'
-						self.motions.gripper_over_piece('a1', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 5
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'd1', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('d1') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
-
-						#Click the clock
-						self.motions.gripper_over_clock(clock_pose, z_coord_chessboard)
-						self.motions.click_clock(self.scene, clock_pose)
+					king = army.white['king_' + start_square]
+					rook = army.white['rook_' + start_square]
 
 				elif color == 'black':
-					if start_square == 'short': #Implement short castle move for black.
-						#Move the king
-						piece = 'king_e8'
-						self.motions.gripper_over_piece('e8', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 6
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'g8', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('g8') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
+					king = army.black['king_' + start_square]
+					rook = army.black['rook_' + start_square]
 
-						#Move the rook
-						piece = 'rook_h8'
-						self.motions.gripper_over_piece('h8', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 7
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'f8', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('f8') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
+				piece = king['piece']
+				self.motions.gripper_over_piece(king['from'],
+												centroids,
+												self.live_chessboard_situation,
+												squares_to_index,
+												z_coord_chessboard
+												)
+				self.motions.playmotion_movement('open_gripper', planning = False)
+				which_error = 1
+				# Lower the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   -offset_start_place, 
+																		   avoid_collisions = False
+																		   )
+				# Close the gripper to pick the piece
+				self.motions.pick_piece(piece, self.pieces_coordinates)
+				# Higher the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   offset_start_place, 
+																		   avoid_collisions = False
+																		   )
+				which_error = 2
+				# Move the arm with straight movements over the chessboard
+				self.motions.straight_movements_chessboard(self.motions.arm, 
+														   centroids, 
+														   king['to'], 
+														   squares_to_index, 
+														   self.tilt, 
+														   clock_pose, 
+														   box_pose, 
+														   avoid_collisions = False
+														   ) 
+				which_error = 1
+				# Lower the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   -offset_end_place, 
+																		   avoid_collisions = False
+																		   )
+				# Place the piece in the end square
+				self.motions.place_piece(king['to'])
+				# Higher the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   offset_end_place, 
+																		   avoid_collisions = False
+																		   )
+				# Move the rook
+				piece = rook['piece']
+				self.motions.gripper_over_piece(rook['from'], 
+												centroids, 
+												self.live_chessboard_situation, 
+												squares_to_index, 
+												z_coord_chessboard
+												)
+				self.motions.playmotion_movement('open_gripper', planning = False)
+				# Lower the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   -offset_start_place, 
+																		   avoid_collisions = False
+																		   )		
+				# Close the gripper to pick the piece.
+				self.motions.pick_piece(piece, self.pieces_coordinates)
+				# Higher the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   offset_start_place, 
+																		   avoid_collisions = False
+																		   ) 
+				which_error = 3
+				# Move the arm with straight movements over the chessboard.
+				self.motions.straight_movements_chessboard(self.motions.arm, 
+														   centroids, 
+														   rook['to'], 
+														   squares_to_index, 
+														   self.tilt, 
+														   clock_pose, 
+														   box_pose, 
+														   avoid_collisions = False
+														   )
+				which_error = 1
+				# Lower the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   -offset_end_place, 
+																		   avoid_collisions = False
+																		   )					
+				# Place the piece in the end square.
+				self.motions.place_piece(rook['to'])
+				# Higher the gripper
+				fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 
+																		   'z', 
+																		   offset_end_place, 
+																		   avoid_collisions = False
+																		   )
 
-						#click the clock
-						self.motions.gripper_over_clock(clock_pose, z_coord_chessboard)
-						self.motions.click_clock(self.scene, clock_pose)
-
-					elif start_square == 'long': #Implement long castle move for black.
-						#Move the king
-						piece = 'king_e8'
-						self.motions.gripper_over_piece('e8', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 8
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'c8', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('c8') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
-
-						#Move the rook
-						piece = 'rook_a8'
-						self.motions.gripper_over_piece('a8', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
-						self.motions.playmotion_movement('open_gripper', planning = False)
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_start_place, avoid_collisions = False) #Lower the gripper		
-						self.motions.pick_piece(piece, self.pieces_coordinates) #Close the gripper to pick the piece.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_start_place, avoid_collisions = False) #Higher the gripper
-						which_error = 9
-						self.motions.straight_movements_chessboard(self.motions.arm, centroids, 'd8', squares_to_index, self.tilt, clock_pose, box_pose, avoid_collisions = False) #Move the arm with straight movements over the chessboard.
-						which_error = 1
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					
-						self.motions.place_piece('d8') #Place the piece in the end square.
-						fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', offset_end_place, avoid_collisions = False) #Higher the gripper
-
-						#Click the clock
-						self.motions.gripper_over_clock(clock_pose, z_coord_chessboard)
-						self.motions.click_clock(self.scene, clock_pose)
+				# Click the clock
+				self.motions.gripper_over_clock(clock_pose, z_coord_chessboard)
+				self.motions.click_clock(self.scene, clock_pose)
 						
 			else:
 				piece = self.live_chessboard_situation[start_place][0] #Save the piece that is going to be moved.
@@ -515,7 +524,7 @@ class Playing:
 		except StraightMovementError:
 			rospy.loginfo('The straight movement startegy was not successful. Try planning the movement.')
 			#If the error comes from a stright movement over the chessboard, try planning the movement
-			if which_error != 1:
+			if which_error != 1:	### TODO: error dictionary to display meaningful strings
 				if which_error == 2: 
 					self.motions.gripper_over_piece('g1', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)
 					fraction, translation = self.motions.straight_eef_movement(self.motions.arm, 'z', -offset_end_place, avoid_collisions = False) #Lower the gripper					

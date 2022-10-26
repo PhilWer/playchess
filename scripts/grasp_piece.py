@@ -37,7 +37,7 @@ PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
 saved_joints_pose_file = PLAYCHESS_PKG_DIR + '/config/saved_joints_pose_file.yaml'
 simul_config = rospy.get_param('/tiago_playchess/simul_config')
 
-#Callbacks definition
+# Callbacks definition
 def CallbackColor(data):
 	color.data = data.data
 	if color.data == 'white':
@@ -57,13 +57,12 @@ color = String()
 color.data = 'none'
 
 class Grasping:
-#Class containing the different movements that TIAGo has to perform to grasp pieces
+# Class containing the different movements that TIAGo has to perform to grasp pieces
 	def __init__(self):
-		#Initialize a MoveIt commander
+		# Initialize a MoveIt commander
 		moveit_commander.roscpp_initialize(sys.argv)
-		#MoveIt utilities
-		#self.savepose = SavePose()
-		#Define TIAGo interfaces and commanders for each group of the robot 
+		# MoveIt utilities
+		# Define TIAGo interfaces and commanders for each group of the robot 
 		self.robot = moveit_commander.RobotCommander()
 		self.scene = moveit_commander.PlanningSceneInterface() #The interface with the world surrounding the robot
 		self.gripper = moveit_commander.MoveGroupCommander('gripper')
@@ -76,26 +75,20 @@ class Grasping:
 		self.torso_cmd = rospy.Publisher('/torso_controller/command', JointTrajectory, queue_size = 1)
 		self.arm_cmd = rospy.Publisher('/arm_controller/command', JointTrajectory, queue_size = 1)
 
-		#Create an action client for PlayMotionAction
+		# Create an action client for PlayMotionAction
 		self.playmotion = SimpleActionClient("play_motion", PlayMotionAction)
-		#Wait until the action sever has started
+		# Wait until the action sever has started
 		if not self.playmotion.wait_for_server(rospy.Duration(30)):
 			rospy.logerr("Could not connect to /play_motion")
 			exit()
 		rospy.sleep(2)
 
-		#Remember some meaniningful joint values
+		# Remember some meaniningful joint values
 		self.arm.remember_joint_values('prepare_chess_grasp', values = [1.40, 0.70, -0.50, 0.50, -2.00, 1.00, 0.0]) #Arm in resting pose
 		self.arm.remember_joint_values('open_arm', values = [0.20, 0.70, -0.20, 0.50, -1.50, 0.0, 0.0]) #Open the arm
 		self.arm.remember_joint_values('open_wide_right', values = [math.pi/40, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-		#self.gripper.remember_joint_values('spacing_fingers', values = [0.02, 0.02])
-		'''
-		if ready:
-			with open(saved_joints_pose_file) as file:
-				saved_arm_joints = yaml.load(file)
-			self.arm.remember_joint_values('arm_over_box', values = [saved_arm_joints[0], saved_arm_joints[1], saved_arm_joints[2], saved_arm_joints[3], saved_arm_joints[4], saved_arm_joints[5], saved_arm_joints[6]])
-		'''
-		#Import pieces characteristics
+
+		# Import pieces characteristics
 		self.pawn = cfg.pawn
 		self.rook = cfg.rook
 		self.bishop = cfg.bishop
@@ -103,7 +96,7 @@ class Grasping:
 		self.queen = cfg.queen
 		self.knight = cfg.knight
 
-		#Load configurations
+		# Load configurations
 		self.config_file = rospy.get_param('/tiago_playchess/config')
 		with open(self.config_file) as file:
 			self.config = yaml.load(file)
@@ -114,12 +107,12 @@ class Grasping:
 		self.success_clock = False
 		self.verbose = False
 
-		#Load build/clear scene and octomap configurations
+		# Load build/clear scene and octomap configurations
 		self.time_limit = self.config.get('time_limit', 3) #Maximum time to wait when looking for the object or for ArUco markers
 		self.build_full_scene = self.config.get('full_setup', True)  #if False, the 'explore_surroundings' movement is not performed. Useful to save time in laboratory.
 		self.clear_all = self.config.get('clear_octomap', False) #Clear the octomap at the end of the task (defaulted to False)
 
-		#Load motion strategies
+		# Load motion strategies
 		self.desired_escape = self.config.get('escape_strategy', 'nearby')
 		self.current_escape = None #The escape_strategy remains None (i.e. 'stay still') until the eef is placed close to the object
 		self.pick_gripper_orientation = qp.list_to_Quaternion(self.config.get('GRIPPER_ORIENT', [0, 0.707, 0, 0.707]))
@@ -133,7 +126,7 @@ class Grasping:
 		    self.arm.remember_joint_values('tuck', values = [0.191986, -1.3439, -0.191986, 1.93732, -math.pi/2, 1.37881, 0.0])
 
 	def back_to_initial_state(self):
-		#Bring back TIAGo to its initial state
+		# Bring back TIAGo to its initial state
 		rospy.sleep(5)
 		rospy.loginfo("Back to initial state")
 		goal = PlayMotionGoal()
@@ -142,7 +135,12 @@ class Grasping:
 		self.playmotion.send_goal_and_wait(goal)
 
 	def click_clock(self, scene, clock_pose):
-		#Click the clock after a move is made
+		'''
+		Click the clock after a move is made. When this function is called, the gripper must be
+		already positioned above the clock. 
+		'''
+		### TODO: remove unused arguments scene and clock_pose
+		### TODO: expose the geometrical params
 		rospy.loginfo("Closing the gripper")
 		self.playmotion_movement('close_gripper', planning = False)		
 		rospy.loginfo("Lowering the gripper to click the button")
@@ -151,17 +149,19 @@ class Grasping:
 		self.straight_eef_movement(self.arm, 'z', 0.095, avoid_collisions = False) #Higher the gripper
 		rospy.loginfo("Opening the gripper back")
 		self.playmotion_movement('open_gripper', planning = False)
-		#Move the arm away to see the chessboard
+		# Move the arm away to see the chessboard
 		self.move_arm_joint(0.471) #30 degrees
 		rospy.sleep(4)
 		self.look_down()
 
 	def eef_to_valid_pose(self, group, eef_target_position, eef_target_orientation, exploration_direction, shift_amount, max_shift):
-		#Bring the end-effector to the given pose.
-		#eef_target_position: [Point] the point to which the hand_grasping_frame has to be positioned
-		#eef_target_orientation: [Quaternion] the orientation of the hand in the final point
-		#shift_amount: [float] if the eef_target_position cannot be reached, the target point is raised of shift_amount [m] until a valid position is reached
-		#max_shift: [float] a limit (in [m]) to the overall shift
+		'''
+		Bring the end-effector to the given pose.
+		eef_target_position: [Point] the point to which the hand_grasping_frame has to be positioned
+		eef_target_orientation: [Quaternion] the orientation of the hand in the final point
+		shift_amount: [float] if the eef_target_position cannot be reached, the target point is raised of shift_amount [m] until a valid position is reached
+		max_shift: [float] a limit (in [m]) to the overall shift
+		'''
 		success = False
 		valid_height_value = True
 		total_shift = 0.0
@@ -189,39 +189,43 @@ class Grasping:
 			return success, eef_target.position
 
 	def execute_remembered_joint_values(self, group, name):
-		#Plan and execute a trajectory to bring the arm to a remembered joint value
+		'''
+		Plan and execute a trajectory to bring the arm to a remembered joint value
+		'''
 		if not name in group.get_remembered_joint_values():
 			print('\'' + name + '\' is not a remembered joint value.')
 		else:
 			#group.set_max_velocity_scaling_factor(SLOWDOWN_FACTOR)
 			plan = group.plan(name)
-		if plan.joint_trajectory.points: #True if trajectory contains points
+		if plan.joint_trajectory.points: # True if trajectory contains points
 			group.execute(plan)
 		else:
 			print('The \'' + name +'\' joint value cannot be safely reached now.')
 
 	def extend_torso(self, elevation = 0.35):
+		### TODO: make it a simpler message publisher (with control)
 		rospy.loginfo("Extending the torso up")
 		if elevation < 0.0:
 			elevation = 0.0
 		elif elevation > 0.35:
 			elevation = 0.35
-		#Get the joint values of the torso and the arm and lift the torse to the desired elevation
+		# Get the joint values of the torso and the arm and lift the torso to the desired elevation
 		target_joint_values = self.arm_torso.get_current_joint_values()
 		target_joint_values[0] = elevation
-		self.arm_torso.set_max_velocity_scaling_factor(1.0) # torso movements are considered to be safe, perform them at full speed
-		#Extend the TIAGo torso_lift_joint to look at the plane from above, providing more space to arm movements
+		self.arm_torso.set_max_velocity_scaling_factor(1.0) # torso movements are considered to be 
+															# safe, perform them at full speed
 		try:
 			self.arm_torso.set_joint_value_target(target_joint_values)
 		except MoveItCommanderException as e:
 			print(e)
-		self.arm_torso.go() #Lift the torso
+		# Lift the torso
+		self.arm_torso.go() 
 		rospy.loginfo('Torso extension is ' + str(elevation) + 'm')
 		self.arm_torso.stop()
 
 	def gripper_over_box (self, box_pose, z_coord_chessboard):
-		#Bring the end-effector to the given pose.
-		#clock_pose: pose of the aruco marker positioned over the button of the clock.
+		# Bring the end-effector to the given pose.
+		# clock_pose: pose of the aruco marker positioned over the button of the clock.
 
 		self.success_box = False
 		self.arm.set_end_effector_link('gripper_grasping_frame')
