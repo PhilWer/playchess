@@ -1,0 +1,6 @@
+# Python Libraries
+- Open3D
+- numpy
+# ROS packages
+- rosserial
+- vision_utils

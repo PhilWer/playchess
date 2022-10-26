@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 	
-	<!-- Args and params
-	<arg name="rviz"  default="true"/>
-	<arg name="command_args" value="-d $(find tiago_moveit_tutorial)/launch/grasping.rviz" />
-	<rosparam file="$(find tiago_moveit_tutorial)/config/tiago_octomap_motions.yaml" />
-	-->
-	<!-- Nodes -->
-	<!-- Start looking for pieces and trigger grasping
-	<node pkg = "tiago_playchess" type = "grasp_piece.py" name = "grasp_piece" required = "false" output = "screen"/>
-		<rosparam file = "$(find tiago_playchess)/config/tiago_playchess.yaml" />
-		<rosparam file = "$(find tiago_playchess)/config/offset_movement.yaml" />
-		<param name="back_home" value="false"/>
-	-->
 	<!-- MOVE_BASE -->
 	<arg name="command_args" value="-d $(find tiago_moveit_tutorial)/launch/grasping.rviz" /> <!-- AGGIUNTO -->
 	<rosparam file="$(find tiago_moveit_tutorial)/config/tiago_octomap_motions.yaml" /> <!-- AGGIUNTO -->
