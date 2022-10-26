@@ -9,7 +9,9 @@
 
    > **Tip.** In this phase, it is useful to place the clock and the box aside the chessboard to check that they will be included in the robot field of view.
 
+   <p align="center">
    <img src="chessboard_demo.jpg" width="300" />
+   </p>
 
 4. From the WebCommander, put TIAGo in _gravity compensation_ (from the _Robot demos_ tab) and manually raise the robot's arm. Place it so that the end-effector is above the table and on the right side of the chessboard (w.r.t. the robot point of view) so that the arm does not occludes the line-of-sight.
 
