@@ -1,6 +1,7 @@
 # Repo folders
 src/
 include/
+data/
 
 # Temporary game files
 *.pickle
