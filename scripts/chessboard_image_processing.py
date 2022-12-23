@@ -27,7 +27,7 @@ class ImageProcessing:
 	def grayscale(self, image):
 		#Conversion to grayscale
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-		#Show th original image and the grayscale image
+		#Show the original image and the grayscale image
 		if self.verbose:
 			cv2.imshow('Original image',image)
 			cv2.imwrite(os.path.join(PLAYCHESS_PKG_DIR + '/Images/Segmentazione', '1-original.png'), image)
@@ -79,8 +79,8 @@ class ImageProcessing:
 		cY = np.zeros(len(contours), dtype=int)
 		dist = np.zeros((len(contours), len(contours)))
 		squares_centers = []
-		row = [] #A list to momentaneously contain the squares from the same row
-		rows = [] #A list to contain the squares of the same row in the same element of the list (array)
+		row = [] 	# A list to temporarily contain the squares from the same row
+		rows = [] 	# A list to contain the squares of the same row in the same element of the list (array)
 		last_row = []
 		x_distance = []
 		x_distance_new = []

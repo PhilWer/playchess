@@ -24,6 +24,15 @@ _Add article in `bib` format._
 
 # TODO
 
+## Vaishakh
+
+- [ ] add a method to the vision class the runs the whole computer-vision pipeline. The output should be formatted as follows:
+  - centers (or corners) of the squares (expressed in pixels), organized as in the chessboard (i.e. in a 8x8 matrix).
+  - the image of the scene with the centers (or corners) of the squares overlapped.
+  - the image of the scene with the chessboard corners of the chessboard overlapped.
+  - the number of detected squares (in your case it should be always 64). We will remove this argument, but now keep it for compatibility.
+  - the location fo the chessboard corners.
+
 ## Docs
 
 - [ ] add documentation
