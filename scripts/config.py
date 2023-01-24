@@ -247,18 +247,6 @@ rows_black = {
 'row7': [48, 49, 50, 51, 52, 53, 54, 55],
 'row8': [56, 57, 58, 59, 60, 61, 62, 63]
 }
-'''
-rows_black = {
-'row1': [7, 6, 5, 4, 3, 2, 1, 0],
-'row2': [15, 14, 13, 12, 11, 10, 9, 8],
-'row3': [23, 22, 21, 20, 19, 18, 17, 16],
-'row4': [31, 30, 29, 28, 27, 26, 25, 24],
-'row5': [39, 38, 37, 36, 35, 34, 33, 32],
-'row6': [47, 46, 45, 44, 43, 42, 41, 40],
-'row7': [55, 54, 53, 52, 51, 50, 49, 48],
-'row8': [63, 62, 61, 60, 59, 58, 57, 56]
-}
-'''
 
 columns = { #Columns indexes are the same for both black and white
 'columnA': [56, 48, 40, 32, 24, 16, 8, 0],
@@ -440,7 +428,7 @@ starting_chessboard_situation_complete = {
 'h2': ['pawn_h2', 'white'],
 'g2': ['pawn_g2', 'white'],
 'f2': ['pawn_f2', 'white'],
-'e2': ['paen_e2', 'white'],
+'e2': ['pawn_e2', 'white'],
 'd2': ['pawn_d2', 'white'],
 'c2': ['pawn_c2', 'white'],
 'b2': ['pawn_b2', 'white'],

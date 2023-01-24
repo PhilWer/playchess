@@ -2,6 +2,7 @@
 src/
 include/
 data/
+bags/
 
 # Temporary game files
 *.pickle

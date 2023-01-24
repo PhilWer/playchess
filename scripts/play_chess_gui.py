@@ -264,7 +264,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_InitializationWindow):
     def ChangeState_Callback(self, data):
         global state
         state = data.data
-        ###############
+        
         if state == 11:
             self.ChessboardWindow.indicationLabel.setStyleSheet("background-color: rgb(228, 244, 107);")
             self.ChessboardWindow.indicationLabel.setText("Your turn")
@@ -284,49 +284,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_InitializationWindow):
         if state == 17:
             self.ChessboardWindow.indicationLabel.setStyleSheet("background-color: rgb(141, 231, 144);")
             self.ChessboardWindow.indicationLabel.setText("Move recognized!")
-        '''
-        if state == 1:
-
-            if ready == True:
-                
-
-                state_publisher.publish(11)
-
-                self.ChessboardWindow = ChessboardWhiteWindow()
-                self.ChessboardWindow.show()
-                self.ChessboardWindow.promotion.connect(self.GoToPromotion)
-                self.ChessboardWindow.close_promotion.connect(self.ClosePromotion)
-                self.ChessboardWindow.manual_mode.connect(self.ManualMode)
-                self.ChessboardWindow.back_to_game.connect(self.BackToGame)
-
-                self.hide()
-
-                import config as cfg
-                import moveit_commander
-                from geometry_msgs.msg import Quaternion, PointStamped, Pose, Point, PoseStamped, WrenchStamped
-
-
-                self.pieces_coordinates = cfg.pieces_coordinates
-                self.squares_to_index = cfg.squares_to_index_white
-
-                self.scene = moveit_commander.PlanningSceneInterface() #The interface with the world surrounding the robot
-
-                for name in self.pieces_coordinates:
-                    self.scene.remove_world_object(name)
-
-                with open(simul_config) as file:
-                    square_centers = yaml.load(file)
-
-                #Add cylinders corresponding to the pieces to the planning scene in the starting position
-                for name in self.pieces_coordinates:
-                    pose = PoseStamped()
-                    pose.header.frame_id = 'base_footprint'
-                    pose.header.stamp = rospy.Time.now()
-                    pose.pose = Pose(Point(square_centers[self.squares_to_index[self.pieces_coordinates[name][0]]].point.x, square_centers[self.squares_to_index[self.pieces_coordinates[name][0]]].point.y, square_centers[self.squares_to_index[self.pieces_coordinates[name][0]]].point.z + self.pieces_coordinates[name][1]['height']/2), Quaternion(0, 0, 0, 1))
-                    self.scene.add_cylinder(name, pose, height = self.pieces_coordinates[name][1]['height'], radius = self.pieces_coordinates[name][1]['diameter']/2)
-    
-        ######################
-        '''
 
         if state == 60: #If the status is 60, acquire and show the image of the current chessboard setup.
             self.done = False
@@ -6148,6 +6105,7 @@ class ChessboardBlackWindow(QtWidgets.QWidget, Ui_Chessboard_Black):
             starting_color = self.chessboard_colors[self.opponent_move_start_square]
 
             #Change the destination icon and the starting square icon
+            # TODO: shrink the huge block below using a dict
             if destination_color == 'black':
                     if self.piece_to_move == 'pawn':
                         if self.color_to_move == 'white':
@@ -6252,7 +6210,7 @@ class ChessboardBlackWindow(QtWidgets.QWidget, Ui_Chessboard_Black):
 
     def populate_pieces(self, base_centers, live_chessboard_situation):
         #Function to populate the planning scene with the pieces in their current position.
-        #It receives as input the coordinates of the squares' centeres in the base_footprint reference frame and live_chessboard_situation that keeps track of the pieces positions thoughout the game.
+        #It receives as input the coordinates of the squares' centers in the base_footprint reference frame and live_chessboard_situation that keeps track of the pieces positions thoughout the game.
         #This function needs to be used whenever TIAGo sees that a piece has been moved from the opponent.
 
         #In case there is something in the world form previous executions (maybe the robot was closer or further from the chessboard)

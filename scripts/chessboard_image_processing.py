@@ -6,8 +6,6 @@ import numpy as np
 import math
 import sys
 # ROS Image messages
-#from sensor_msgs.msg import CompressedImage, Image
-#ROS Image message --> Open CV2 image converter
 from cv_bridge import CvBridge, CvBridgeError
 #Open CV2 for saving an image
 import cv2
@@ -20,7 +18,7 @@ counter = 0
 PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
 
 class ImageProcessing:
-#Class containing functions to process chessboard images and detect squares.
+	#Class containing functions to process chessboard images and detect squares.
 	def __init__(self):
 		self.verbose = False
 
