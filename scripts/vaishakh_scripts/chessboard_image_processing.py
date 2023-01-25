@@ -199,30 +199,6 @@ class ImageProcessing():
     ######################################
     ### CORNERS/CENTERS IDENTIFICATION ###
     ######################################
-    # NOTE. Some of the methods in this class are meant to be used somewhere else (i.e. they are meant to be public), such as `segmentation_sequence`. Some other are actually not used, but may be useful even outside the class (e.g. canny or dilation). Some more are just utility methods to be used inside the class (as the one below), thus it is a good habit to prepend a _ to the name.
-    def _categorise_lines(self, lines):
-        """Classify lines as horizontal or vertical, and then to sort them based on their center (ascending). Used to sort outcome of Hough lines detection.
-
-        Args:
-            lines ([perceptionLineClass.Line]): List of Line objects, storing information about the outcome of the Hough transform step.
-
-        Returns:
-            Tuple containing two lists of sorted Line objects, one with horizontal lines and one with vertical lines. Line objects are sorted based on their center coordinate in the relevant direction (ascending).
-        """
-        # Divide horizontal and vertical lines
-        horizontal = []
-        vertical = []
-        for i in range(len(lines)):
-            if lines[i].category == 'horizontal':
-                horizontal.append(lines[i])
-            else:
-                vertical.append(lines[i])
-        # Sort lines based on the relevant center coordinate
-        horizontal = sorted(horizontal, key=operator.attrgetter('centerH'))
-        vertical = sorted(vertical, key=operator.attrgetter('centerV'))
-
-        return horizontal, vertical
-
     def hough_lines(self, edges, img, thresholdx=42, minLineLengthy=100, maxLineGapz=50):
         """Apply Hough transform to detect lines in an image.
 
@@ -272,32 +248,16 @@ class ImageProcessing():
             cv2.destroyWindow("Hough lines")
 
         return hor, ver
+    
 
-    def _drawLines(self, img, lines, color=(0, 0, 255), thickness=2):
-        """Draws lines. This function was used to debug Hough lines generation.
-
-        Args:
-            img (np.ndarray): The image to overlay.
-            lines ([perceptionLineClass.Line]): A list of Line object to draw on `img`.
-            color (tuple, optional): The (BGR) color of the lines. Defaults to (0, 0, 255).
-            thickness (int, optional): The thickness [px] of the lines. Defaults to 2.
-        
-        Returns:
-            np.ndarray: The image with overlayed lines.
-        """
-        for l in lines:
-            l.draw(img, color, thickness)
-        
-        return img
-
-    # Intersections
-    def findIntersections(self, horizontals, verticals, image):
+    ### Intersections utils
+    def find_intersections(self, horizontals, verticals, image):
         """Finds intersections between Hough lines and filters out close points.
 
         Args:
             horizontals ([perceptionLineClass.Line]): A list of Line object, obtained filtering horizontal lines from the output of the Hough transform.
             verticals ([perceptionLineClass.Line]): A list of Line object, obtained filtering vertical lines from the output of the Hough transform.
-            image (np.ndarrya): The image on which to overlay the lines for debug prints.
+            image (np.ndarray): The image on which to overlay the lines for debug prints.
 
         Returns:
             [tuple]: A list of tuples, each one representing the coordinates in pixel of an intersection point.
@@ -347,36 +307,42 @@ class ImageProcessing():
                     intersections.remove(neighbor)
 
         # We still have duplicates for some reason. We'll now remove these
-        filtered_intersections = []
+        intersections_filtered = []
         seen = set()    # set of the already encountered points
         for intersection in intersections:
             # If value has not been encountered yet,
             # ... add it to both list and set.
             if intersection not in seen:
-                filtered_intersections.append(intersection)
+                intersections_filtered.append(intersection)
                 seen.add(intersection)
 
         if self.debug:
             print("We have filtered: " + 
-                  str(len(filtered_intersections)) + " intersections.")
+                  str(len(intersections_filtered)) + " intersections.")
 
             img_intersections = image.copy()
 
-            for intersection in filtered_intersections:
+            for intersection in intersections_filtered:
                 cv2.circle(img_intersections, intersection, 10, (0, 0, 255), 1)
             cv2.imshow("Filtered intersections", img_intersections)
             cv2.waitKey(2000)
             cv2.destroyWindow("Filtered intersections")
 
-        return filtered_intersections
+        return intersections_filtered
 
-    # Assign Intersection
-    def assignIntersections(self, image, intersections):
-        """
-        Takes the filtered intersections and assigns them to a list containing nine sorted lists, each one representing
-        one row of sorted corners. The first list for instance contains the nine corners of the first row sorted
-        in an ascending fashion. This function necessitates that the chessboard's horizontal lines are exactly
-        horizontal on the camera image, for the purposes of row assignment.
+    
+    def assign_intersections(self, img, intersections):
+        """Takes the filtered intersections and assigns them to a list containing nine sorted lists, each one representing one row of sorted corners. The first list for instance contains the nine corners of the first row sorted in an ascending fashion.
+
+        Args:
+            img (img): The image to overlay with the intersections if the debug print is enabled.
+            intersections [tuple]: A list of tuples, each one representing the coordinates in pixel of an intersection point.
+
+        Raises:
+            ValueError: If the length of `intersections` is neither 121 (11x11, framed chessboard) nor 81 (9x9 chessboard without frame).
+
+        Returns:
+            A tuple containing the same `intersections` given as input, excluding the intersections with the edge of the frame (if any); and the intersections ordered according to the chessboard pattern (i.e. list of 9 lists, each one containing 9 tuples with intersections coordinates).
         """
         # Exploit the fact that intersections are ordered according to chessboard pattern, to filter out 'false corners' resulting from the intersection of chessboard lines and the edge of the board frame.
         if len(intersections) == 121:
@@ -393,7 +359,7 @@ class ImageProcessing():
         # DEBUG
         if self.debug:
             corner_cnt = 0
-            debug_img = image.copy()
+            debug_img = img.copy()
             # for row in corners:
             for corner in intersections:
                 cv2.circle(debug_img, corner, 10, (0, 255, 0), 1)
@@ -413,42 +379,43 @@ class ImageProcessing():
                     sorted_intersections[i].append(intersections[k])
                     k += 1
             
-        return intersections, sorted_intersections, image
+        return intersections, sorted_intersections
     
 
-    def makeSquares(self, corners,  image, side=True):
-        """
-        Instantiates the 64 squares given 81 corner points.
+    def make_squares(self, corners,  img, playing_white = True):
+        """Instantiates the 64 squares given 81 corner points.
         labelledsquare contains centroid of each suare with its x,y and square name
         side takes in False-> Black or True-> White according to TIAGo side
-        """
 
+        Args:
+            corners (_type_): _description_
+            img (_type_): _description_
+            side (bool, optional): _description_. Defaults to True.
+
+        Returns:
+            _type_: _description_
+        """
         # List of Square objects
         squares = []
-        coordinates = []
+        
         # Lists containing positional and index information
         letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
         numbers = ['1', '2', '3', '4', '5', '6', '7', '8']
-        row = []
-        count = 0
-
         for i in range(8):
             for j in range(8):
                 # Make the square - yay!
-                # position = letters[-i-1] + numbers[-j-1]
                 c1 = corners[i][j]
                 c2 = corners[i][j+1]
                 c3 = corners[i+1][j]
                 c4 = corners[i+1][j+1]
-                '''check for type conversion'''
+                # Compute the center of the cell as the CoM of the 4 corners
                 centerx = int((c1[0]+c2[0]+c3[0]+c4[0])/4)
                 centery = int((c1[1]+c2[1]+c3[1]+c4[1])/4)
-
                 center = (centerx,
                           centery)
-                # print(c1, c2, c3, c4, center)
+                
                 squares.append(center)
-        # print(squares, len(squares))
+        
         rows = [[], [], [], [], [], [], [], []]
         k = 0
         if len(squares) == 64:
@@ -456,99 +423,45 @@ class ImageProcessing():
                 for j in range(8):
                     rows[i].append(squares[k])
                     k += 1
-            # print('sorted row')
-            # print(rows,len(rows))
 
-        # DEBUG
+        # Assing a letter + number label to each square, in compliance with chess notation
+        numbers.sort(reverse = playing_white)
+        letters.sort(reverse = not playing_white)
+        
+        squares_labeled = []
+        for i, N in enumerate(numbers):
+            for j, L in enumerate(letters):
+                center = squares[8 * i + j]
+                squares_labeled.append((center[0], center[1], L + N))
 
-        squareCenters = 0
-        debugImg = image.copy()
+        # Overlay centers and labels to the original image
+        img_centers = img.copy()
         # for row in corners:
-        for center_ in squares:
-            # for corner in row:
-            # cv2.circle(debugImg, corner, 10, (0,255,0), 1)
-            # cornerCounter += 1
-            cv2.circle(debugImg, center_, 5, (0, 255, 0), -1)
-            squareCenters += 1
+        for center in squares_labeled:
+            cv2.circle(img_centers, (center[0], center[1]),
+                        5,               # size
+                        (0, 255, 0),     # color
+                        -1               # thickness (-1 --> full)
+                        )
+            cv2.putText(img_centers, 
+                        center[2],                  # text 
+                        (center[0], center[1]),     # position
+                        cv2.FONT_HERSHEY_SIMPLEX,   # font
+                        0.5,    
+                        (0, 0, 255),                # color 
+                        1
+                        )
+
+        # Debug
         if self.debug:
-            cv2.imshow("Final centers", debugImg)
+            cv2.imshow("Labeled centers", img_centers)
+            cv2.waitKey(5000)
+            cv2.destroyWindow("Labeled centers")
 
-            print("")
-            print("There are: " + str(squareCenters) +
-                  " centers that were found.")
-            print("")
+        return squares, squares_labeled, rows, img_centers
 
-        # considering TIAGo playing as White
-        labeledSquares = []
-        alpha = 0
-        num = 0
 
-        # for TIAGo playing as WHITE
-        if side:
-            numbers.sort(reverse=True)
-            for center_ in squares:
-
-                labeledSquares.append((center_[0], center_[
-                    1], letters[alpha]+numbers[num]))
-                alpha += 1
-                if alpha > 7:
-                    alpha = 0
-                    if num != 7:
-                        num += 1
-
-        # for Tiago playing as BLACK
-        else:
-            letters.sort(reverse=True)
-            for center_ in squares:
-
-                labeledSquares.append((center_[0], center_[
-                    1], letters[alpha]+numbers[num]))
-                alpha += 1
-                if alpha > 7:
-                    alpha = 0
-                    if num != 7:
-                        num += 1
-
-        # DEbug
-        if self.debug:
-            debugImg1 = image.copy()
-            squareCenters = 0
-            # for row in corners:
-            for center_ in labeledSquares:
-                # for corner in row:
-                # cv2.circle(debugImg, corner, 10, (0,255,0), 1)
-                # cornerCounter += 1
-                cv2.circle(debugImg1, (center_[0], center_[
-                           1]), 5, (0, 255, 0), -1)
-                cv2.putText(debugImg1, center_[2], (center_[0], center_[1]), cv2.FONT_HERSHEY_SIMPLEX,
-                            0.5, (0, 0, 255), 1)
-                squareCenters += 1
-            cv2.imshow("Labeled centers", debugImg1)
-
-            print(labeledSquares, len(labeledSquares))
-
-        #         square.draw(image)
-
-        #         index += 1
-        #         # print(index)
-        #         # xyz = square.getDepth(depthImage)
-        #         # coordinates.append(xyz)
-
-        # cv2.imshow("Board Identified", image)
-
-        # if self.debug:
-        #     cv2.imwrite("5SquaresIdentified.jpeg", image)
-
-        # # Get x,y,z coordinates from square centers & depth image
-        # # coordinates = self.getDepth(square.roi, depthImage)
-        # # DEBUG
-        # if self.debug:
-        #     print("Number of Squares found: " + str(len(squares)))
-
-        return squares, labeledSquares, rows, debugImg
-
-    # Trackbar for setting the Hough parameters
-
+    ### Hough lines parameters tuning
     def track_bar(self, img, dilated_img, intersections):
         '''
         for mannually setting up values of Hough parameter to corretly detect 91  square corners
@@ -592,9 +505,10 @@ class ImageProcessing():
 
                 hor, ver = self.hough_lines(
                     dilated_img, img, thresholdx, minLineLengthy, maxLineGapz)
-                intersections = self.findIntersections(hor, ver, img)
-                corners, sorted_intersections, image = self.assignIntersections(
-                    img, intersections)
+                intersections = self.find_intersections(hor, ver, img)
+                corners, sorted_intersections = self.assign_intersections(img, 
+                                                                          intersections
+                                                                          )
         return corners, sorted_intersections
     
     def tune_hough_params(self, img, dilated_img):
@@ -607,10 +521,10 @@ class ImageProcessing():
                                        int(min_line_length), 
                                        int(max_line_gap)
                                        )
-            intersections = self.findIntersections(hor, ver, img)
+            intersections = self.find_intersections(hor, ver, img)
             # The evaluation function exploits the prior knowledge of the chessboard geometry, i.e. we want exactly 121 corners (81 of the actual chessboard + intersections with chessboard frame)
             return abs(len(intersections) - 121) * (-1)
-            # NOTE. The above evaluation function makes the method appliable only to chessboard with an external frame. To extend it to any chessboard, try to include also the assignIntersections function and check that the output sorted_intersections is 9x9.
+            # NOTE. The above evaluation function makes the method appliable only to chessboard with an external frame. To extend it to any chessboard, try to include also the assign_intersections function and check that the output sorted_intersections is 9x9.
 
         # Setup the Bayesian Optimization process
         params = {'threshold':          (42, 200),
@@ -658,43 +572,94 @@ class ImageProcessing():
                                    int(bo.max['params']['min_line_length']),
                                    int(bo.max['params']['max_line_gap']) 
                                    )
-        intersections = self.findIntersections(hor, ver, img)
-        corners, sorted_intersections, image = self.assignIntersections(
-                    img, intersections)
-        
+        intersections = self.find_intersections(hor, ver, img)
+        corners, sorted_intersections = self.assign_intersections(img, 
+                                                                  intersections
+                                                                  )
         return corners, sorted_intersections
+    
+    
+    # NOTE. Some of the methods in this class are meant to be used somewhere else (i.e. they are meant to be public), such as `segmentation_sequence`. Some other are actually not used, but may be useful even outside the class (e.g. canny or dilation). Some more are just utility methods to be used inside the class (as the one below), thus it is a good habit to prepend a _ to the name.
+    def _categorise_lines(self, lines):
+        """Classify lines as horizontal or vertical, and then to sort them based on their center (ascending). Used to sort outcome of Hough lines detection.
+
+        Args:
+            lines ([perceptionLineClass.Line]): List of Line objects, storing information about the outcome of the Hough transform step.
+
+        Returns:
+            Tuple containing two lists of sorted Line objects, one with horizontal lines and one with vertical lines. Line objects are sorted based on their center coordinate in the relevant direction (ascending).
+        """
+        # Divide horizontal and vertical lines
+        horizontal = []
+        vertical = []
+        for i in range(len(lines)):
+            if lines[i].category == 'horizontal':
+                horizontal.append(lines[i])
+            else:
+                vertical.append(lines[i])
+        # Sort lines based on the relevant center coordinate
+        horizontal = sorted(horizontal, key=operator.attrgetter('centerH'))
+        vertical = sorted(vertical, key=operator.attrgetter('centerV'))
+
+        return horizontal, vertical
 
 
+    def _drawLines(self, img, lines, color=(0, 0, 255), thickness=2):
+        """Draws lines. This function was used to debug Hough lines generation.
+
+        Args:
+            img (np.ndarray): The image to overlay.
+            lines ([perceptionLineClass.Line]): A list of Line object to draw on `img`.
+            color (tuple, optional): The (BGR) color of the lines. Defaults to (0, 0, 255).
+            thickness (int, optional): The thickness [px] of the lines. Defaults to 2.
+        
+        Returns:
+            np.ndarray: The image with overlayed lines.
+        """
+        for l in lines:
+            l.draw(img, color, thickness)
+        
+        return img
+
+    #########################
+    ### COMPLETE PIPELINE ###
+    #########################
     def segmentation_sequence(self, img):
         # Apply Gaussian blurring, convert the image to greyscale and apply adaptive thresholding
         img_thresholded = self.preprocessing(img)
         # Perform edge detection on the thresholded image
-        edge_img = self.canny_edge_detection(img_thresholded)
+        img_edge = self.canny_edge_detection(img_thresholded)
         # Dilate the edges
-        dilated_edge_img = self.dilation(edge_img, kernel_size=(5, 5), iterations=5)
+        img_dilated_edge = self.dilation(img_edge, kernel_size=(5, 5), iterations=5)
         # Chessboard edges used to eliminate unwanted point in assign intersections function
-        contoured_img, chessBoardEdges, annotated_image_vertices = self.chessboard_contour(
-            img, dilated_edge_img)
-        canny_img = self.canny_edge_detection(contoured_img)
+        img_contour_masked, chessboard_contour, img_contour_edge = self.chessboard_contour(img, img_dilated_edge)
+        img_edge_masked = self.canny_edge_detection(img_contour_masked)
         '''
         hor, ver = self.hough_lines(canny_img, img)
         intersections = self.findIntersections(hor, ver, img)
-        corners, sorted_intersection, image = self.assignIntersections(
-            img, intersections)
+        corners, sorted_intersection = self.assign_intersections(img, 
+                                                                 intersections
+                                                                )
         corners, sorted_intersection = self.track_bar(img, canny_img, corners)
         '''
-        corners, sorted_intersection = self.tune_hough_params(img, canny_img)
-        squares, labelledSquares, rows, annotated_image = self.makeSquares(
-            sorted_intersection, img, side=True)
-        chessBoardEdgesS_with_out_borders = [
-            corners[0], corners[8], corners[80], corners[72]]
-                # save edges of chess board with out corners for detecting moves in chess_move_detection
+        corners, intersection_sorted = self.tune_hough_params(img, img_edge_masked)
+        squares, __, rows, img_centers_labeled = self.make_squares(intersection_sorted, 
+                                                                   img, 
+                                                                   playing_white = False
+                                                                   )
+        
+        # Save corners of the chessboard (without frame) to allow homographic transform of the game field.
+        chessboard_vertices = [corners[0], 
+                               corners[8], 
+                               corners[80], 
+                               corners[72]
+                              ]
         with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 
                   'yaml', 'store_chess_board_edges.yaml'), 
                   'w') as file:
             documents = yaml.dump(chessBoardEdgesS_with_out_borders, file)
         
-        return rows, annotated_image, annotated_image_vertices, len(squares), chessBoardEdges, chessBoardEdgesS_with_out_borders
+        return rows, img_centers_labeled, img_contour_edge, len(squares), chessboard_contour, chessboard_vertices
 
 
 if __name__ == "__main__":
