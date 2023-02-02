@@ -24,9 +24,10 @@ from bayes_opt import BayesianOptimization
 class ImageProcessing():
     """Class containing functions to process chessboard images and detect squares.
     """
-    def __init__(self, debug = False):
+    def __init__(self, hough_autotune = True, debug = False):
         # Activate/Deactivate debug print and imshow.
         self.debug = debug
+        self.hough_autotune = hough_autotune
 
     ######################
     ### PRE-PROCESSING ###
@@ -199,7 +200,7 @@ class ImageProcessing():
     ######################################
     ### CORNERS/CENTERS IDENTIFICATION ###
     ######################################
-    def hough_lines(self, edges, img, thresholdx=42, minLineLengthy=100, maxLineGapz=50):
+    def hough_lines(self, edges, img, threshold = 42, min_line_length = 100, max_line_gap = 50):
         """Apply Hough transform to detect lines in an image.
 
         Args:
@@ -213,22 +214,25 @@ class ImageProcessing():
             A tuple containing two lists of perceptionLineClass.Line objects, one for horizontal and one fo vertical lines, respectively.
         """
         # Detect Hough lines
-        lines = cv2.HoughLinesP(edges, rho=1, theta=1 * np.pi / 180, threshold=thresholdx,
-                                minLineLength=minLineLengthy, maxLineGap=maxLineGapz)
-        N = lines.shape[0]
+        lines = cv2.HoughLinesP(edges, rho = 1, theta = 1 * np.pi / 180, threshold = threshold,
+                                minLineLength = min_line_length, maxLineGap = max_line_gap)
+        if lines is None:   # i.e. if there are no lines
+            return [], []    
+        else:
+            N = lines.shape[0]
 
         # Draw lines on image
-        New = []
+        new = []
         for i in range(N):
             x1 = lines[i][0][0]
             y1 = lines[i][0][1]
             x2 = lines[i][0][2]
             y2 = lines[i][0][3]
 
-            New.append([x1, y1, x2, y2])
+            new.append([x1, y1, x2, y2])
 
-        lines = [Line(x1=New[i][0], y1=New[i][1], x2=New[i][2],
-                      y2=New[i][3]) for i in range(len(New))]
+        lines = [Line(x1=new[i][0], y1=new[i][1], x2=new[i][2],
+                      y2=new[i][3]) for i in range(len(new))]
 
         # Categorise the lines into horizontal or vertical
         horizontal, vertical = self._categorise_lines(lines)
@@ -351,10 +355,10 @@ class ImageProcessing():
             del intersections[0:len(intersections):11]
             del intersections[9:len(intersections):10]
             del intersections[81:]
-        elif len(intersections) == 81:
-            pass
         else:
-            raise ValueError('There are ' + str(len(intersections)) + ' intersections, but they are expected to be:\n * 81 (9x9) for a chessboard without frame\n* 121 (11x11) for a chessboard with frame')
+            pass
+        #else:
+        #    raise ValueError('There are ' + str(len(intersections)) + ' intersections, but they are expected to be:\n* 81 (9x9) for a chessboard without frame\n* 121 (11x11) for a chessboard with frame')
 
         # DEBUG
         if self.debug:
@@ -466,50 +470,57 @@ class ImageProcessing():
         '''
         for mannually setting up values of Hough parameter to corretly detect 91  square corners
         '''
-        def call_back(x):
+        def callback(x):
             pass
+        
+        #           name:               (default, max)
+        params = {'threshold':          (40, 200),
+                  'min_line_length':    (100, 200),
+                  'max_line_gap':       (50, 200)
+                 }
+        
+        # Mute the debug to avoid having too many prints during the learning process
+        debug_tmp = self.debug
+        self.debug = False
 
-        cv2.namedWindow('adjust_Hough_parameter', cv2.WINDOW_AUTOSIZE)
-        cv2.createTrackbar(
-            'threshold', 'adjust_Hough_parameter', 42, 200, call_back)
-        cv2.createTrackbar('min_line_length',
-                           'adjust_Hough_parameter', 100, 200, call_back)
-        cv2.createTrackbar(
-            'max_line_gap', 'adjust_Hough_parameter', 50, 200, call_back)
-        cv2.createTrackbar('off', 'adjust_Hough_parameter', 0, 1, call_back)
-        switch = '0 : NOT_ACTIVE \n 1 : ACTIVE'
-        cv2.createTrackbar(switch, 'adjust_Hough_parameter', 0, 1, call_back)
-        off = 0
+        # Create the window displaying the image and the track bars to tune the parameters
+        window_name = 'Hough parameters tuning'
+        cv2.namedWindow(window_name, cv2.WINDOW_AUTOSIZE)
+        for param_name in params:
+            cv2.createTrackbar(param_name, window_name, *params[param_name], callback)
+            # NOTE. Depending on the OpenCV version, the above line may throw a warning.
+        
+        # Add one trackbar that allows to exit the loop
+        switch = '0 : change params and update image \n 1 : close window and confirm params'
+        cv2.createTrackbar(switch, window_name, 0, 1, callback)
         while True:
             track_img = img.copy()
-            cornerCounter = 0
+            # Draw one circle for each detected corner
             for corner in intersections:
                 cv2.circle(track_img, corner, 10, (0, 255, 255), 1)
-                cornerCounter += 1
-            cv2.imshow('adjust_Hough_parameter', track_img)
-            cv2.waitKey(30)
-            s = cv2.getTrackbarPos(switch, 'adjust_Hough_parameter')
+            cv2.imshow(window_name, track_img)
+            cv2.waitKey(30) # refresh rate in [ms]
 
-            if s == 0:
-                pass
-            else:
-                off = cv2.getTrackbarPos('off', 'adjust_Hough_parameter')
-                if off == 1:
-                    break
-                thresholdx = cv2.getTrackbarPos(
-                    'threshold', 'adjust_Hough_parameter')
-                minLineLengthy = cv2.getTrackbarPos(
-                    'min_line_length', 'adjust_Hough_parameter')
-                maxLineGapz = cv2.getTrackbarPos(
-                    'max_line_gap', 'adjust_Hough_parameter')
+            off = cv2.getTrackbarPos(switch, window_name)
+            if off == 1:
+                break
 
-                hor, ver = self.hough_lines(
-                    dilated_img, img, thresholdx, minLineLengthy, maxLineGapz)
-                intersections = self.find_intersections(hor, ver, img)
-                corners, sorted_intersections = self.assign_intersections(img, 
-                                                                          intersections
-                                                                          )
-        return corners, sorted_intersections
+            threshold, min_line_length, max_line_gap = [cv2.getTrackbarPos(param_name, 
+                                                                            window_name)
+                                                        for param_name in params
+                                                        ]
+            hor, ver = self.hough_lines(dilated_img, img, 
+                                        threshold, min_line_length, max_line_gap
+                                        )
+            intersections = self.find_intersections(hor, ver, img)
+            corners, intersections_sorted = self.assign_intersections(img, 
+                                                                      intersections
+                                                                     )
+        
+        # Restore the previous debug value
+        self.debug = debug_tmp 
+
+        return corners, intersections_sorted
     
     def tune_hough_params(self, img, dilated_img):
         '''
@@ -527,9 +538,10 @@ class ImageProcessing():
             # NOTE. The above evaluation function makes the method appliable only to chessboard with an external frame. To extend it to any chessboard, try to include also the assign_intersections function and check that the output sorted_intersections is 9x9.
 
         # Setup the Bayesian Optimization process
-        params = {'threshold':          (42, 200),
-                  'min_line_length':    (100, 200),
-                  'max_line_gap':       (50, 200)
+        #           name:               (min, max)
+        params = {'threshold':          (0, 200),
+                  'min_line_length':    (0, 200),
+                  'max_line_gap':       (0, 200)
                  }
         bo = BayesianOptimization(f = hough_lines_eval,
                                   pbounds = params,
@@ -634,15 +646,20 @@ class ImageProcessing():
         # Chessboard edges used to eliminate unwanted point in assign intersections function
         img_contour_masked, chessboard_contour, img_contour_edge = self.chessboard_contour(img, img_dilated_edge)
         img_edge_masked = self.canny_edge_detection(img_contour_masked)
-        '''
-        hor, ver = self.hough_lines(canny_img, img)
-        intersections = self.findIntersections(hor, ver, img)
-        corners, sorted_intersection = self.assign_intersections(img, 
-                                                                 intersections
-                                                                )
-        corners, sorted_intersection = self.track_bar(img, canny_img, corners)
-        '''
-        corners, intersection_sorted = self.tune_hough_params(img, img_edge_masked)
+        
+        if self.hough_autotune: # the parameters of the Hough transform will be automatically
+                                # tuned by a Bayesian optimization algorithm
+            corners, intersection_sorted = self.tune_hough_params(img, img_edge_masked)
+        else:
+            # Run the hough lines 
+            hor, ver = self.hough_lines(img_edge_masked, img)
+            intersections = self.find_intersections(hor, ver, img)
+            corners, intersection_sorted = self.assign_intersections(img, 
+                                                                    intersections
+                                                                    )
+            corners, intersection_sorted = self.track_bar(img, img_edge_masked, corners)
+        
+        # Divide the chessboard into squares based on Hough transform output
         squares, __, rows, img_centers_labeled = self.make_squares(intersection_sorted, 
                                                                    img, 
                                                                    playing_white = False
@@ -654,10 +671,11 @@ class ImageProcessing():
                                corners[80], 
                                corners[72]
                               ]
-        with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 
-                  'yaml', 'store_chess_board_edges.yaml'), 
+        # Store the pixels location of the corners of the chessboard. TODO: make it relative to package root instead of script location.
+        with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..',
+                  'tmp', 'chess_board_edges.yaml'), 
                   'w') as file:
-            documents = yaml.dump(chessBoardEdgesS_with_out_borders, file)
+            documents = yaml.dump(chessboard_vertices, file)
         
         return rows, img_centers_labeled, img_contour_edge, len(squares), chessboard_contour, chessboard_vertices
 
@@ -665,12 +683,12 @@ class ImageProcessing():
 if __name__ == "__main__":
     print('This script implement the ImageProcessing class, which is meant to be as image processing utility in a ROS node. As the script has been executed as main, a demo of the funtioning on a test image is shown.')
 
-    DEBUG = True    # Set it to True to display the outcome of each processing step.
+    DEBUG = False    # Set it to True to display the outcome of each processing step.
 
     # Import the test image to run the demo processing.
     FILE = 'windows_open.png'   # the name of the file used for processing demo  
     image = cv2.imread(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'Static_images', FILE))
-    image_processing = ImageProcessing(debug = DEBUG)
+    image_processing = ImageProcessing(debug = DEBUG, hough_autotune = False)
     # Run the chessboard segmentation and cell's centers identification
     __, img_out_seg, img_in_seg, __, __, __ = image_processing.segmentation_sequence(image)
     # Display the results
