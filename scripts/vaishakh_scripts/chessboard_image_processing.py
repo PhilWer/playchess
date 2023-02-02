@@ -466,10 +466,16 @@ class ImageProcessing():
 
 
     ### Hough lines parameters tuning
-    def track_bar(self, img, dilated_img, intersections):
-        '''
-        for mannually setting up values of Hough parameter to corretly detect 91  square corners
-        '''
+    def track_bar(self, img, img_edge, intersections):
+        """Manually tune the Hough transform parameters using sliders on a graphical interface.
+
+        Args:
+            img (np.ndarray): The image to overlay.
+            img_edge (np.ndarray): The image on which to run Hough transform, supposed to be result of an edge detection (and possibly dilation) step.
+
+        Returns:
+            A tuple containing all the corners detected with the optimal set of parameters, excluding the intersections with the edge of the frame (if any); and the intersections ordered according to the chessboard pattern (i.e. list of 9 lists, each one containing 9 tuples with intersections coordinates).
+        """
         def callback(x):
             pass
         
@@ -509,7 +515,7 @@ class ImageProcessing():
                                                                             window_name)
                                                         for param_name in params
                                                         ]
-            hor, ver = self.hough_lines(dilated_img, img, 
+            hor, ver = self.hough_lines(img_edge, img, 
                                         threshold, min_line_length, max_line_gap
                                         )
             intersections = self.find_intersections(hor, ver, img)
@@ -522,12 +528,18 @@ class ImageProcessing():
 
         return corners, intersections_sorted
     
-    def tune_hough_params(self, img, dilated_img):
-        '''
-        for automatically setting up values of Hough parameter to corretly detect 91  square corners
-        '''
+    def tune_hough_params(self, img, img_edge):
+        """Automatically tune the Hough transform parameters exploting a Bayesian Optimization algorithm.
+
+        Args:
+            img (np.ndarray): The image to overlay.
+            img_edge (np.ndarray): The image on which to run Hough transform, supposed to be result of an edge detection (and possibly dilation) step.
+
+        Returns:
+            A tuple containing all the corners detected with the optimal set of parameters, excluding the intersections with the edge of the frame (if any); and the intersections ordered according to the chessboard pattern (i.e. list of 9 lists, each one containing 9 tuples with intersections coordinates).
+        """
         def hough_lines_eval(threshold, min_line_length, max_line_gap):
-            hor, ver = self.hough_lines(dilated_img, img, 
+            hor, ver = self.hough_lines(img_edge, img, 
                                        int(threshold), 
                                        int(min_line_length), 
                                        int(max_line_gap)
@@ -579,16 +591,16 @@ class ImageProcessing():
 
         # Use the parameters found by the optimizer to run the chessboard segmentation.
         # TODO. What happens if the BO is not able to find an optimal set of params?
-        hor, ver = self.hough_lines(dilated_img, img, 
+        hor, ver = self.hough_lines(img_edge, img, 
                                    int(bo.max['params']['threshold']),
                                    int(bo.max['params']['min_line_length']),
                                    int(bo.max['params']['max_line_gap']) 
                                    )
         intersections = self.find_intersections(hor, ver, img)
-        corners, sorted_intersections = self.assign_intersections(img, 
+        corners, intersections_sorted = self.assign_intersections(img, 
                                                                   intersections
                                                                   )
-        return corners, sorted_intersections
+        return corners, intersections_sorted
     
     
     # NOTE. Some of the methods in this class are meant to be used somewhere else (i.e. they are meant to be public), such as `segmentation_sequence`. Some other are actually not used, but may be useful even outside the class (e.g. canny or dilation). Some more are just utility methods to be used inside the class (as the one below), thus it is a good habit to prepend a _ to the name.
@@ -688,7 +700,7 @@ if __name__ == "__main__":
     # Import the test image to run the demo processing.
     FILE = 'windows_open.png'   # the name of the file used for processing demo  
     image = cv2.imread(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'Static_images', FILE))
-    image_processing = ImageProcessing(debug = DEBUG, hough_autotune = False)
+    image_processing = ImageProcessing(debug = DEBUG, hough_autotune = True)
     # Run the chessboard segmentation and cell's centers identification
     __, img_out_seg, img_in_seg, __, __, __ = image_processing.segmentation_sequence(image)
     # Display the results
