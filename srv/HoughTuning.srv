@@ -1,0 +1,4 @@
+sensor_msgs/Image img       # The image to overlay when drawing the results
+sensor_msgs/Image img_edge  # The image on which to run Hough transform, supposed to be result of an edge detection (and possibly dilation) step.
+---
+int64[] params              # The params resulting from the tuning of the Hough line transform

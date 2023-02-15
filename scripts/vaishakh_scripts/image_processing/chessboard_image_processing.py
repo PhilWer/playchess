@@ -6,6 +6,8 @@ This script is based on OpenCV and numpy (no ROS-related dependencies), and impl
 - automatic, based on Bayesian Optimization
 """
 
+import rospy
+
 import numpy as np
 import operator
 import yaml
@@ -24,9 +26,10 @@ from bayes_opt import BayesianOptimization
 class ImageProcessing():
     """Class containing functions to process chessboard images and detect squares.
     """
-    def __init__(self, hough_autotune = True, debug = False):
+    def __init__(self, hough_autotune = True, debug = False, save = True):
         # Activate/Deactivate debug print and imshow.
         self.debug = debug
+        self.save  = save
         self.hough_autotune = hough_autotune
 
     ######################
@@ -500,6 +503,7 @@ class ImageProcessing():
 
             off = cv2.getTrackbarPos(switch, window_name)
             if off == 1:
+                cv2.destroyWindow(window_name)  # close the param tuning window
                 break
 
             threshold, min_line_length, max_line_gap = [cv2.getTrackbarPos(param_name, 
@@ -671,15 +675,15 @@ class ImageProcessing():
                                corners[80], 
                                corners[72]
                               ]
-        print(labelledSquares)
-        with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'yaml', 'store_chess_board_edges.yaml'), 'w') as file:
-            documents = yaml.dump(chessboard_vertices, file)
-            
-        with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'yaml', 'store_chess_board_edges.yaml'), 'w') as file: 
-            documents = yaml.dump(chessboard_vertices, file)
+        if self.save:
+            with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'yaml', 'store_chess_board_edges.yaml'), 'w') as file:
+                documents = yaml.dump(chessboard_vertices, file)
+                
+            with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'yaml', 'store_chess_board_edges.yaml'), 'w') as file: 
+                documents = yaml.dump(chessboard_vertices, file)
 
-        with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'yaml', 'corners_names_empty_square.yaml'), 'w') as file:  
-            documents = yaml.dump(labelledSquares,file)
+            with open(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'yaml', 'corners_names_empty_square.yaml'), 'w') as file:  
+                documents = yaml.dump(labelledSquares,file)
         
 
         return rows, img_centers_labeled, img_contour_edge, len(squares), chessboard_contour, chessboard_vertices
@@ -687,13 +691,14 @@ class ImageProcessing():
 
 if __name__ == "__main__":
     print('This script implement the ImageProcessing class, which is meant to be as image processing utility in a ROS node. As the script has been executed as main, a demo of the funtioning on a test image is shown.')
+    rospy.init_node('')
 
     DEBUG = False    # Set it to True to display the outcome of each processing step.
-
+    SAVE  = False    # Set it to True to save the outcomes into yaml files.
     # Import the test image to run the demo processing.
-    FILE = 'empty_rgb_image.png'   # the name of the file used for processing demo  
-    image = cv2.imread(os.path.join(os.path.realpath(os.path.dirname(__file__)), 'move_detection/csv/empty_chess_board_new/', FILE))
-    image_processing = ImageProcessing(debug = DEBUG, hough_autotune = True)
+    FILE = 'empty_chess_board.png'   # the name of the file used for processing demo  
+    image = cv2.imread(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', 'Static_images', FILE))
+    image_processing = ImageProcessing(debug = DEBUG, save = SAVE, hough_autotune = False)
     # Run the chessboard segmentation and cell's centers identification
     __, img_out_seg, img_in_seg, __, __,__= image_processing.segmentation_sequence(image)
     # Display the results
