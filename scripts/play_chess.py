@@ -246,19 +246,27 @@ class Playing:
 			self.live_chessboard_situation = yaml.load(live_file.read())
 
 		try:
-			if start_square == 'short' or start_square == 'long': 	# castle (it. 'arrocco')
+			'''
+			### TODO: create a separate file `armies.py`. Create two dictionaries (`white` and
+					  `black`). For each army, define:
+						- close_squares
+						- far_squares
+						- start/end squares for long and short castle
+			'''
+			if start_square == 'short' or start_square == 'long': #Castle happened.
 				rospy.loginfo(str(start_square) + ' castle happening')
 				offset_start_place = 0.10
 				offset_end_place = 0.10
 				self.tilt = False
-				# Set start and end square of both king and rook depending on the army and the type of castling
+
 				if color == 'white':
 					king = army.white['king_' + start_square]
 					rook = army.white['rook_' + start_square]
+
 				elif color == 'black':
 					king = army.black['king_' + start_square]
 					rook = army.black['rook_' + start_square]
-				# Move the king
+
 				piece = king['piece']
 				self.motions.gripper_over_piece(king['from'],
 												centroids,
@@ -515,7 +523,7 @@ class Playing:
 		
 		except StraightMovementError:
 			rospy.loginfo('The straight movement startegy was not successful. Try planning the movement.')
-			#If the error comes from a straight movement over the chessboard, try planning the movement
+			#If the error comes from a stright movement over the chessboard, try planning the movement
 			if which_error != 1:	### TODO: error dictionary to display meaningful strings
 				if which_error == 2: 
 					self.motions.gripper_over_piece('g1', centroids, self.live_chessboard_situation, squares_to_index, z_coord_chessboard)

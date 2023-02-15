@@ -3,6 +3,8 @@ src/
 include/
 data/
 bags/
+old/
+*zip
 
 # Temporary game files
 *.pickle
@@ -163,6 +165,12 @@ dmypy.json
 cython_debug/
 
 # PyCharm
+
+IMage
+*.png
+*.bag
+*.jpeg
+*.csv
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
