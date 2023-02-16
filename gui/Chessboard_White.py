@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QObject, QEvent, pyqtSignal, QSize
 from PyQt5.QtWidgets import QApplication
 
-PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
-GUI_PKG_DIR       = '/home/luca/tiago_public_ws/src/chess_gui'
+PLAYCHESS_PKG_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')
+GUI_PKG_DIR       = os.path.join(os.path.abspath(os.path.dirname(__file__)))
 
 class Ui_Chessboard_White(object):
     def setupUi(self, Chessboard, app):
