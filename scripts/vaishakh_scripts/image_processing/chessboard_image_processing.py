@@ -1,12 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 """Segment empty chessboard from image, and get centers of each cell.
 This script is based on OpenCV and numpy (no ROS-related dependencies), and implements a class that segments a chessboard from an image (based on contours), and identifies the center of each cell in the chessboard (based on Hough transform). As a unique set of Hough transform parameters is hard to be identified experimentally, two tuning methods are implemented:
 - manual, based on sliders in a graphical interface
 - automatic, based on Bayesian Optimization
 """
-
-import rospy
+from __future__ import print_function
 
 import numpy as np
 import operator
@@ -487,7 +486,12 @@ class ImageProcessing():
         window_name = 'Hough parameters tuning'
         cv2.namedWindow(window_name, cv2.WINDOW_AUTOSIZE)
         for param_name in params:
-            cv2.createTrackbar(param_name, window_name, *params[param_name], callback)
+            cv2.createTrackbar(param_name, 
+                               window_name, 
+                               params[param_name][0],
+                               params[param_name][1],
+                               callback
+                               )
             # NOTE. Depending on the OpenCV version, the above line may throw a warning.
         
         # Add one trackbar that allows to exit the loop
@@ -691,14 +695,13 @@ class ImageProcessing():
 
 if __name__ == "__main__":
     print('This script implement the ImageProcessing class, which is meant to be as image processing utility in a ROS node. As the script has been executed as main, a demo of the funtioning on a test image is shown.')
-    rospy.init_node('')
 
     DEBUG = False    # Set it to True to display the outcome of each processing step.
     SAVE  = False    # Set it to True to save the outcomes into yaml files.
     # Import the test image to run the demo processing.
     FILE = 'empty_chess_board.png'   # the name of the file used for processing demo  
     image = cv2.imread(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', 'Static_images', FILE))
-    image_processing = ImageProcessing(debug = DEBUG, save = SAVE, hough_autotune = False)
+    image_processing = ImageProcessing(debug = DEBUG, save = SAVE, hough_autotune = True)
     # Run the chessboard segmentation and cell's centers identification
     __, img_out_seg, img_in_seg, __, __,__= image_processing.segmentation_sequence(image)
     # Display the results
