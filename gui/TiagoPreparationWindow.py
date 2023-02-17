@@ -8,8 +8,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-GUI_PKG_DIR = '/home/luca/tiago_public_ws/src/chess_gui'
-
 class Ui_TiagoPreparation(object):
     def setupUi(self, TiagoPreparation):
         TiagoPreparation.setObjectName("TiagoPreparation")
@@ -67,7 +65,7 @@ class Ui_TiagoPreparation(object):
         self.WarningSignLabel.setSizePolicy(sizePolicy)
         self.WarningSignLabel.setMaximumSize(QtCore.QSize(30, 30))
         self.WarningSignLabel.setText("")
-        self.WarningSignLabel.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/warning.png"))
+        self.WarningSignLabel.setPixmap(QtGui.QPixmap("./images/warning.png"))
         self.WarningSignLabel.setScaledContents(True)
         self.WarningSignLabel.setObjectName("WarningSignLabel")
         self.horizontalLayout_2.addWidget(self.WarningSignLabel)
@@ -105,7 +103,7 @@ class Ui_TiagoPreparation(object):
         self.ImageLabel.setMaximumSize(QtCore.QSize(200, 200))
         self.ImageLabel.setFocusPolicy(QtCore.Qt.NoFocus)
         self.ImageLabel.setText("")
-        self.ImageLabel.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/tiago_chess.jpg"))
+        self.ImageLabel.setPixmap(QtGui.QPixmap("./images/tiago_chess.jpg"))
         self.ImageLabel.setScaledContents(True)
         self.ImageLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.ImageLabel.setOpenExternalLinks(True)
@@ -121,7 +119,7 @@ class Ui_TiagoPreparation(object):
         self.ProgressGifLabel.setMinimumSize(QtCore.QSize(0, 0))
         self.ProgressGifLabel.setMaximumSize(QtCore.QSize(50, 50))
         self.ProgressGifLabel.setText("")
-        self.movie = QtGui.QMovie(GUI_PKG_DIR + "/images/ElaborationGif.gif")
+        self.movie = QtGui.QMovie("./images/ElaborationGif.gif")
         self.ProgressGifLabel.setMovie(self.movie)
         self.movie.start()
         #self.ProgressGifLabel.setPixmap(QtGui.QPixmap("images/Pulse-1s-211px.gif"))

@@ -2,8 +2,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-GUI_PKG_DIR = '/home/luca/tiago_public_ws/src/chess_gui'
-
 class Ui_SearchExecution(object):
     def setupUi(self, SearchExecution):
         SearchExecution.setObjectName("SearchExecution")
@@ -28,7 +26,7 @@ class Ui_SearchExecution(object):
         self.ProgressGifLabel.setSizePolicy(sizePolicy)
         self.ProgressGifLabel.setMaximumSize(QtCore.QSize(50, 50))
         self.ProgressGifLabel.setText("")
-        self.movie = QtGui.QMovie(GUI_PKG_DIR + "/images/ElaborationGif.gif")
+        self.movie = QtGui.QMovie("./images/ElaborationGif.gif")
         self.ProgressGifLabel.setMovie(self.movie)
         self.movie.start()
         #self.ProgressGifLabel.setPixmap(QtGui.QPixmap("images/Pulse-1s-211px.gif"))

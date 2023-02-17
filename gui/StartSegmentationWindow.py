@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from std_msgs.msg import String
-
-GUI_PKG_DIR = '/home/luca/tiago_public_ws/src/chess_gui'
 
 class Ui_StartSegmentation(object):
     def setupUi(self, StartSegmentation, color): #, color
@@ -64,7 +61,7 @@ class Ui_StartSegmentation(object):
         self.Checklist.setObjectName("Checklist")
         item = QtWidgets.QListWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/black_pawn2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./images/black_pawn2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item.setIcon(icon)
         self.Checklist.addItem(item)
         item = QtWidgets.QListWidgetItem()

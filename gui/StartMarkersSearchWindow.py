@@ -2,8 +2,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-GUI_PKG_DIR = '/home/luca/tiago_public_ws/src/chess_gui'
-
 class Ui_StartMarkersSearch(object):
     def setupUi(self, StartMarkersSearch):
         StartMarkersSearch.setObjectName("StartMarkersSearch")
@@ -38,7 +36,7 @@ class Ui_StartMarkersSearch(object):
         self.ClockChecklist.setObjectName("ClockChecklist")
         item = QtWidgets.QListWidgetItem()
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/black_pawn2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("./images/black_pawn2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         item.setIcon(icon)
         item.setFlags(QtCore.Qt.ItemIsDragEnabled|QtCore.Qt.ItemIsUserCheckable|QtCore.Qt.ItemIsEnabled)
         self.ClockChecklist.addItem(item)
@@ -59,7 +57,7 @@ class Ui_StartMarkersSearch(object):
         self.ClockImage1Label.setSizePolicy(sizePolicy)
         self.ClockImage1Label.setMaximumSize(QtCore.QSize(140, 140))
         self.ClockImage1Label.setText("")
-        self.ClockImage1Label.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/clock_positioning_from_above.jpg"))
+        self.ClockImage1Label.setPixmap(QtGui.QPixmap("./images/clock_positioning_from_above.jpg"))
         self.ClockImage1Label.setScaledContents(True)
         self.ClockImage1Label.setObjectName("ClockImage1Label")
         self.horizontalLayout_2.addWidget(self.ClockImage1Label)
@@ -71,7 +69,7 @@ class Ui_StartMarkersSearch(object):
         self.ClockImage2Label.setSizePolicy(sizePolicy)
         self.ClockImage2Label.setMaximumSize(QtCore.QSize(140, 140))
         self.ClockImage2Label.setText("")
-        self.ClockImage2Label.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/clock_positioning_detail.jpg"))
+        self.ClockImage2Label.setPixmap(QtGui.QPixmap("./images/clock_positioning_detail.jpg"))
         self.ClockImage2Label.setScaledContents(True)
         self.ClockImage2Label.setObjectName("ClockImage2Label")
         self.horizontalLayout_2.addWidget(self.ClockImage2Label)
@@ -123,7 +121,7 @@ class Ui_StartMarkersSearch(object):
         self.BoxImage1Label.setSizePolicy(sizePolicy)
         self.BoxImage1Label.setMaximumSize(QtCore.QSize(140, 140))
         self.BoxImage1Label.setText("")
-        self.BoxImage1Label.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/box_positioning_from_above.jpg"))
+        self.BoxImage1Label.setPixmap(QtGui.QPixmap("./images/box_positioning_from_above.jpg"))
         self.BoxImage1Label.setScaledContents(True)
         self.BoxImage1Label.setObjectName("BoxImage1Label")
         self.horizontalLayout.addWidget(self.BoxImage1Label)
@@ -135,7 +133,7 @@ class Ui_StartMarkersSearch(object):
         self.BoxImage2Label.setSizePolicy(sizePolicy)
         self.BoxImage2Label.setMaximumSize(QtCore.QSize(140, 140))
         self.BoxImage2Label.setText("")
-        self.BoxImage2Label.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/box_positioning_detail.jpg"))
+        self.BoxImage2Label.setPixmap(QtGui.QPixmap("./images/box_positioning_detail.jpg"))
         self.BoxImage2Label.setScaledContents(True)
         self.BoxImage2Label.setObjectName("BoxImage2Label")
         self.horizontalLayout.addWidget(self.BoxImage2Label)
@@ -180,7 +178,7 @@ class Ui_StartMarkersSearch(object):
         self.PiecesImage1Label.setSizePolicy(sizePolicy)
         self.PiecesImage1Label.setMaximumSize(QtCore.QSize(140, 140))
         self.PiecesImage1Label.setText("")
-        self.PiecesImage1Label.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/pieces_positioning_from_above.jpg"))
+        self.PiecesImage1Label.setPixmap(QtGui.QPixmap("./images/pieces_positioning_from_above.jpg"))
         self.PiecesImage1Label.setScaledContents(True)
         self.PiecesImage1Label.setObjectName("PiecesImage1Label")
         self.horizontalLayout_3.addWidget(self.PiecesImage1Label)
@@ -192,7 +190,7 @@ class Ui_StartMarkersSearch(object):
         self.PiecesImage2Label.setSizePolicy(sizePolicy)
         self.PiecesImage2Label.setMaximumSize(QtCore.QSize(140, 140))
         self.PiecesImage2Label.setText("")
-        self.PiecesImage2Label.setPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/pieces_positioning_detail.jpg"))
+        self.PiecesImage2Label.setPixmap(QtGui.QPixmap("./images/pieces_positioning_detail.jpg"))
         self.PiecesImage2Label.setScaledContents(True)
         self.PiecesImage2Label.setObjectName("PiecesImage2Label")
         self.horizontalLayout_3.addWidget(self.PiecesImage2Label)

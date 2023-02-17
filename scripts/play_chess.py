@@ -221,6 +221,7 @@ class Playing:
 		self.pieces_coordinates = cfg.pieces_coordinates
 
 		# Directory of the live chessboard situation
+		# TODO. Place init_chessboard_situation.yaml in a folder. When the game begins, 
 		self.dir_live_chessboard_situation = PACKAGE_DIR + "/scripts/live_chessboard_situation.yaml"
 
 		self.columns = cfg.columns_explicit

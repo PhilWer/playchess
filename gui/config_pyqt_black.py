@@ -139,30 +139,6 @@ chessboard_colors = {
 
 
 #Matrix definition of the squares
-'''
-matrix = [
-['self.a8', 'self.b8', 'self.c8', 'self.d8', 'self.e8', 'self.f8', 'self.g8', 'self.h8'],
-['self.a7', 'self.b7', 'self.c7', 'self.d7', 'self.e7', 'self.f7', 'self.g7', 'self.h7'],
-['self.a6', 'self.b6', 'self.c6', 'self.d6', 'self.e6', 'self.f6', 'self.g6', 'self.h6'],
-['self.a5', 'self.b5', 'self.c5', 'self.d5', 'self.e5', 'self.f5', 'self.g5', 'self.h5'],
-['self.a4', 'self.b4', 'self.c4', 'self.d4', 'self.e4', 'self.f4', 'self.g4', 'self.h4'],
-['self.a3', 'self.b3', 'self.c3', 'self.d3', 'self.e3', 'self.f3', 'self.g3', 'self.h3'],
-['self.a2', 'self.b2', 'self.c2', 'self.d2', 'self.e2', 'self.f2', 'self.g2', 'self.h2'],
-['self.a1', 'self.b1', 'self.c1', 'self.d1', 'self.e1', 'self.f1', 'self.g1', 'self.h1']
-]
-'''
-'''
-matrix = [
-['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8'],
-['a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7'],
-['a6', 'b6', 'c6', 'd6', 'e6', 'f6', 'g6', 'h6'],
-['a5', 'b5', 'c5', 'd5', 'e5', 'f5', 'g5', 'h5'],
-['a4', 'b4', 'c4', 'd4', 'e4', 'f4', 'g4', 'h4'],
-['a3', 'b3', 'c3', 'd3', 'e3', 'f3', 'g3', 'h3'],
-['a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'],
-['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1']
-]
-'''
 matrix = [
 ['h8', 'g8', 'f8', 'e8', 'd8', 'c8', 'b8', 'a8'],
 ['h7', 'g7', 'f7', 'e7', 'd7', 'c7', 'b7', 'a7'],

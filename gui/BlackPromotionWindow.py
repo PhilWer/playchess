@@ -8,20 +8,17 @@ from std_msgs.msg import String
 from std_msgs.msg import Bool, Int16, String
 from geometry_msgs.msg import Point
 
-PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
-GUI_PKG_DIR       = '/home/luca/tiago_public_ws/src/chess_gui'
-
 class Ui_BlackPromotion(object):
     def setupUi(self, BlackPromotion):
         #Icons of the selected buttons
         self.icon_bishop_selected = QtGui.QIcon()
-        self.icon_bishop_selected.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Bishop_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_bishop_selected.addPixmap(QtGui.QPixmap("./images/B_Bishop_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.icon_knight_selected = QtGui.QIcon()
-        self.icon_knight_selected.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Knight_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_knight_selected.addPixmap(QtGui.QPixmap("./images/B_Knight_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.icon_queen_selected = QtGui.QIcon()
-        self.icon_queen_selected.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Queen_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_queen_selected.addPixmap(QtGui.QPixmap("./images/B_Queen_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.icon_rook_selected = QtGui.QIcon()
-        self.icon_rook_selected.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Rook_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_rook_selected.addPixmap(QtGui.QPixmap("./images/B_Rook_w_frame.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
         BlackPromotion.setObjectName("BlackPromotion")
         BlackPromotion.resize(400, 134)
@@ -41,7 +38,7 @@ class Ui_BlackPromotion(object):
         self.queenPushButton.setSizePolicy(sizePolicy)
         self.queenPushButton.setText("")
         self.icon_queen = QtGui.QIcon()
-        self.icon_queen.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Queen_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_queen.addPixmap(QtGui.QPixmap("./images/B_Queen_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.queenPushButton.setIcon(self.icon_queen_selected)
         self.queenPushButton.setIconSize(QtCore.QSize(50, 50))
         self.queenPushButton.setObjectName("queenPushButton")
@@ -55,7 +52,7 @@ class Ui_BlackPromotion(object):
         self.rookPushButton.setSizePolicy(sizePolicy)
         self.rookPushButton.setText("")
         self.icon_rook = QtGui.QIcon()
-        self.icon_rook.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Rook_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_rook.addPixmap(QtGui.QPixmap("./images/B_Rook_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.rookPushButton.setIcon(self.icon_rook)
         self.rookPushButton.setIconSize(QtCore.QSize(50, 50))
         self.rookPushButton.setObjectName("rookPushButton")
@@ -68,7 +65,7 @@ class Ui_BlackPromotion(object):
         self.knightPushButton.setSizePolicy(sizePolicy)
         self.knightPushButton.setText("")
         self.icon_knight = QtGui.QIcon()
-        self.icon_knight.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Knight_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_knight.addPixmap(QtGui.QPixmap("./images/B_Knight_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.knightPushButton.setIcon(self.icon_knight)
         self.knightPushButton.setIconSize(QtCore.QSize(50, 50))
         self.knightPushButton.setObjectName("knightPushButton")
@@ -81,7 +78,7 @@ class Ui_BlackPromotion(object):
         self.bishopPushButton.setSizePolicy(sizePolicy)
         self.bishopPushButton.setText("")
         self.icon_bishop = QtGui.QIcon()
-        self.icon_bishop.addPixmap(QtGui.QPixmap(GUI_PKG_DIR + "/images/B_Bishop_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_bishop.addPixmap(QtGui.QPixmap("./images/B_Bishop_w.jpg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.bishopPushButton.setIcon(self.icon_bishop)
         self.bishopPushButton.setIconSize(QtCore.QSize(50, 50))
         self.bishopPushButton.setObjectName("bishopPushButton")
