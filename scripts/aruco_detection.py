@@ -12,7 +12,6 @@ import yaml
 
 # ROS libraries
 import rospy
-import rospkg
 import moveit_commander
 
 # ROS packages
@@ -36,16 +35,18 @@ In a different script, there should be a SetupManager (opposed to a GameManager)
 Isolate the SceneBuilder, just use the `new` class to pass the clock and box Pose to the SceneBuilder
 '''
 
+PLAYCHESS_PKG_DIR = "/home/pal/tiago_public_ws/src/playchess"
+GUI_SCRIPTS_DIR   = PLAYCHESS_PKG_DIR + "/scripts/gui"
+
 # Publishers initialization
 state_publisher = rospy.Publisher('/state', Int16, queue_size = 10)
 
-def save_image(data):
+def save_image(msg):
 	# Convert the ROS Image message into a numpy ndarray.
-	img = ros_numpy.msgify(msg)
+	img = ros_numpy.numpify(msg)
 	# Save the image to the proper folder to open it in the GUI.
-	gui_img_dir = os.path.join(rospkg.get_path('playchess'), 'gui', 'images')
-	cv2.imwrite(os.path.join(gui_img_dir, 'markers_localization.png'), img) 
-	rospy.loginfo('ARUCO markers localization result image saved in the ' + gui_img_dir + ' folder.')
+	cv2.imwrite(os.path.join(GUI_SCRIPTS_DIR, 'images', 'markers_localization.png'), cv2.cvtColor(img, cv2.COLOR_BGR2RGB)) 
+	rospy.loginfo('ARUCO markers localization result image saved in the ' + (os.path.join(GUI_SCRIPTS_DIR, 'images') + ' folder.'))
 	# Publish a state message to be read by the GUI. Once received, the GUI will enable the button to confirm the markers localization.
 	state_publisher.publish(40)
 
@@ -83,15 +84,17 @@ class Aruco:	# probably should be something like "SceneBuilder or SceneSetup"
 				pose_msg = rospy.wait_for_message('/{}/pose'.format(name), PoseStamped, timeout = time_limit)
 				got_aruco = True
 			except rospy.exceptions.ROSException: #Handle the exception thrown by wait_for_message if timeout occurs
-				rospy.logwarn('Timeout exceeded the time limit of {time_limit:.0f}s.'.format(time_limit = time_limit))
+				#rospy.logwarn('Timeout exceeded the time limit of {time_limit:.0f}s.'.format(time_limit = time_limit))
 				got_aruco = False
 
 			if got_aruco: # and pose_msg.header.frame_id == '/base_footprint'
 				if averaged_samples == 1:
 					pose_f = pose_msg.pose
 				elif averaged_samples > 1:
-					pose_f.position = pts.average_point(new_point = pose_msg.pose.position, num_samples = averaged_samples, avg_point = pose_f.position)
-					pose_f.orientation = quat.average_Quaternions(new_q = pose_msg.pose.orientation, num_samples = averaged_samples, avg_q = pose_f.orientation)
+					pass
+					# TODO. Restore the missing libraries `points` and `quaternions`
+					#pose_f.position = pts.average_point(new_point = pose_msg.pose.position, num_samples = averaged_samples, avg_point = pose_f.position)
+					#pose_f.orientation = quat.average_Quaternions(new_q = pose_msg.pose.orientation, num_samples = averaged_samples, avg_q = pose_f.orientation)
 				averaged_samples += 1
 				rospy.loginfo('ArUco marker for {} found:'.format(target))
 				rospy.loginfo(pose_f)

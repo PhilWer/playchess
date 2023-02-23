@@ -6,3 +6,4 @@
 - ros_numpy
 - vision_utils
 - aruco_ros
+- rosserial

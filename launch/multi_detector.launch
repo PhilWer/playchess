@@ -34,6 +34,6 @@
       <param name = "corner_refinement"  value = "SUBPIX" />
   </node>
 
-  <node pkg = "tiago_playchess" type = "aruco_detection.py" name = "aruco_detection" required = "false" output = "screen"/>
+  <node pkg = "playchess" type = "aruco_detection.py" name = "aruco_detection" required = "false" /> <!-- output = "screen"/> -->
 
 </launch>

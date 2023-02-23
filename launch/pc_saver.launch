@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>  
+
+	<!-- launch the node to manage the joystick commands in the different operational states -->
+	<node pkg = "playchess" type = "pcd_saver_loader.py" name = "pcd_saver" required = "false" output = "screen"/>
+
+
+</launch>

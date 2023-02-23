@@ -1,0 +1,1410 @@
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 13967037]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - &id001 !!python/object/apply:numpy.dtype
+        args: [f8, 0, 1]
+        state: !!python/tuple [3, <, null, null, null, -1, -1, 0]
+      - !!binary |
+        d3I3StZ36z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        jhJoA5H5zj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        wkCZkUxe6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 13982057]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        /jzSSC1o6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        dAtu3kgNyD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        FwaQOnBy6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 13991117]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Zusa9A5f6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0pV6UhE4wT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        9I8ReDuB6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 13999938]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        UJ9s2y9P6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Na86FyLbtD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        aJw3gmWV6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14009952]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ze4h11Jn6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        uHnApwZEnD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        LuGP/C6J6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14019012]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        4nv6vR9y6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        H+qSBzkRm78=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        2BcCx7CH6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14028072]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ZqxsRiJz6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        xA0xDdGYtL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        oT5HVYt/6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14035940]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Va/+A6ZS6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        CN4kGlwWwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7pl7CFOS6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14044046]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        g9H+MEW26T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        h9OF1qC5zj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        EOdu+GVp6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14053106]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        oPprIVSk6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7xCdS+ftxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        FWna7D1y6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14061927]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        9QTWVMyb6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        jbfGfa0vwT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7iqjAo2B6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14070034]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        uG77Kzem6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        fjjxCzq0tD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        K8xOFed/6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14079093]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        q+QDxfWj6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        jGW8KTitmj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ULxdKTiJ6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14086961]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cj7bWVmu6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        45hYz0LZm78=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        pEByX5OH6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14096021]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AdET6Ly46T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        A2SRZO+XtL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        rlwPke6F6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14103889]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        QofGMGGz6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        78sX14lDwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7MW8MUyD6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14111995]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Cl3AbMvk5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Z+PZ8iK/zj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        qyy4nAdq6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14121055]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        TWJ4nv7x5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        J3o6xrXyxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        4y7GtTl06D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14130115]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        R3ChUi3e5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        tYqbhroVwT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        +h7nj4WP6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14138936]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        YS+ADzHo5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        V295kFhotD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        bMqFO4qN6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14147043]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cONgvzLm5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7ojxkMmNmj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        FNMCXDSX6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14154911]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        lk7AnTTt5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        wwqZvR5knL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7QAm0UmJ6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14163970]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        hGyMsS/x5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        UalhzwXOtL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        2iINnSWN6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14172077]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        bHPqKzDy5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        /lPzEzJDwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        djzpvhCF6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14180898]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        CAmnKn5E5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        qvFlc6bHzj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        kJfo1mFu6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14189004]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        zqoz0sE05j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8au5mcDcxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        pMCQAJJ46D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14218091]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        D9Vdp9U45j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        q9EwLzIMwT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        zhG8Uot86D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14226913]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        9753CBcs5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AzyS6tAatD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        781rtpKS6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14244079]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        gtNcTxEw5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        TFVflfB2mj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        R5JrrJGW6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14254093]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        f2ZpGhMx5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        G8Cjt5OynL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        QKpzMnKO6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14262914]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        1pOESMYp5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        tPuk2/ratL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        FFhvYnee6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14271020]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        XuBNDEpE5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ej1wrWdhwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        uNhymuOJ6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14280080]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        KK4hsFZy5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        zd2+QIqzzj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        aEf8ylR46D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14287948]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        2jJVEFFx5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        USk5dk3Txz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MP+4y6qC6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14297008]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        sghbkEJw5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        44C134vVwD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        uIUkNtWM6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14305114]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ADfagk505D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        RLS5hT4ctD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        elI31tSQ6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14312982]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        eunYDMFo5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0kJ4fGIVmT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        TRSlXcSn6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14322042]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MHcHTbNs5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        72LQ4+COnL8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        bL1ep8qr6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14329910]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        zoEt0eN15D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        wZUU7Y4rtb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        YXtl2ROp6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14338970]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        woVZqq9x5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        5Mmsa3aRwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        KHnO/DSn6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14347076]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        l4eyiQe14j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        wg0xfQSkzj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        dyn5EHmQ6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14354944]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        pD8/WFix4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ZNSWr7Gxxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MfyHigCP6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14364004]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        BXM0Vcuw4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        XUxVs6y+wD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        09BasZCZ6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14372110]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        G8f8CCqw4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        1vtSxaH6sz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        +uAkVlKk6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14379978]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Zrgq4fi44j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ZDI+mIIQmT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        KfA6FY2h6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14388084]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        zukMXAe94j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        f5objvq1nb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0rmnOHil6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14395952]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        eAZwEtjF4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7MlonGtqtb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        5hMgQ4ei6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14405012]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ki558tfG4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        R6n+OESNwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        lKDkQXea6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14413118]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        3598EPjw4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AQl+3V9kzj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        c3TIx/iP6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14421939]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0Na5/4H44D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        D5U4dC2cxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        LZJ6PT+g6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14430046]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        OikO+oj44D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        HuyYe8W7wD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        RIT8w0ur6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14441013]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        /KLXKoH44D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        N6DoXcDOsz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        nNjabV226D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14450073]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        PE+hSOQA4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        NWjQsTr/mD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ufQNNmiz6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14458894]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        rLLMDgwF4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        5cC6HuBInr8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        o7g02U+36D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14467954]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        hAtuTA4G4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        /QYYQLpitb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0mD5wiyv6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14476060]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Qgn6cY3+4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        YnhHkySIwb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        +pSZGye16D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14483928]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8gvbAkx33j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        LHbkzxM9zj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        HbLYwISj6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14492034]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cJZOq45j3j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8IuhKCNhxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        sWvbqMSx6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14499902]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        oI9GQFR63j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        TNklafukwD8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        CbaUAdC66D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14508962]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        t8yWoFmK3j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        il2g64ihsz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        F5WL9oi36D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14517068]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        FkxkCKyL3j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        d862j77dlz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        GspiHhLD6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14524936]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        treGaqyb3j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        q/L00R2in78=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Myrz6KW/6D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14533996]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        1FHs2aKr3j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        6vsA8jKEtb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        lHsE8GG86D8=
+- !!python/object/new:geometry_msgs.msg._PointStamped.PointStamped
+  state:
+  - !!python/object/new:std_msgs.msg._Header.Header
+    state:
+    - 0
+    - !!python/object/new:rospy.rostime.Time
+      state: [1677161758, 14544010]
+    - /base_footprint
+  - !!python/object/new:geometry_msgs.msg._Point.Point
+    state:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8tdbD0Cm3j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ZVhZsYSowb8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8O1BJKW76D8=

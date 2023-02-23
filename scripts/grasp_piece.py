@@ -32,10 +32,10 @@ from errors import ArucoException, PlanningException, StraightMovementError
 
 #ready = False
 
-PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
+PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/playchess'
 
 saved_joints_pose_file = PLAYCHESS_PKG_DIR + '/config/saved_joints_pose_file.yaml'
-simul_config = rospy.get_param('/tiago_playchess/simul_config')
+simul_config = rospy.get_param('/playchess/simul_config')
 
 # Callbacks definition
 def CallbackColor(data):
@@ -97,7 +97,7 @@ class Grasping:
 		self.knight = cfg.knight
 
 		# Load configurations
-		self.config_file = rospy.get_param('/tiago_playchess/config')
+		self.config_file = rospy.get_param('/playchess/config')
 		with open(self.config_file) as file:
 			self.config = yaml.load(file)
 		self.simulation = self.config.get('simulation') #Is the code running in simulation mode?

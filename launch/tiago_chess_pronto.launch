@@ -5,9 +5,9 @@
 	<arg name = "config" default = "standard" />
 	<param name = "playchess/config" type = "str" value = "$(find playchess)/scripts/config/$(arg config)_config.yaml" />
 	<param name = "playchess/simul_config" type = "str" value = "$(find playchess)/config/simul_config.yaml" />
-	<param name = "playchess/simul_config_not_transformed" type = "str" value = "$(find tiago_playchess)/config/simul_config_not_transformed.yaml" />
+	<param name = "playchess/simul_config_not_transformed" type = "str" value = "$(find playchess)/config/simul_config_not_transformed.yaml" />
 	<param name = "playchess/chessboard_vertices" type = "str" value = "$(find playchess)/config/chessboard_vertices.yaml" />
-	<param name = "playchess/chessboard_vertices_not_transformed" type = "str" value = "$(find tiago_playchess)/config/chessboard_vertices_not_transformed.yaml" />
+	<param name = "playchess/chessboard_vertices_not_transformed" type = "str" value = "$(find playchess)/config/chessboard_vertices_not_transformed.yaml" />
 	<param name = "playchess/z_coord_chessboard_mean" type = "str" value = "$(find playchess)/config/z_coord_chessboard_mean.yaml" />
 	<param name = "playchess/clock_pose_file" type = "str" value = "$(find playchess)/config/clock_pose_file.yaml" />
 	<param name = "playchess/box_pose_file" type = "str" value = "$(find playchess)/config/box_pose_file.yaml" />
@@ -21,10 +21,6 @@
 	<!-- Set the serial port parameters -->
 	<arg name = "port" 		default = "/dev/ttyUSB0" />
 	<arg name = "baud" 		default = "57600" />
-
-	<!-- load yaml file(s) with the recorded movements to play with Playmotion
-	<rosparam file = "$(find tiago_playchess)/config/my_movements.yaml" />
-	-->
   
 	<!-- NODES -->
 

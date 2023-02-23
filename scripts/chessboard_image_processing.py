@@ -17,7 +17,7 @@ import os
 bridge = CvBridge()
 counter = 0
 
-PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
+PLAYCHESS_PKG_DIR = '/home/pal/tiago_public_ws/src/tiago_playchess'
 
 class ImageProcessing:
 #Class containing functions to process chessboard images and detect squares.
@@ -488,7 +488,7 @@ class ImageProcessing:
 
 def main():
 	rospy.init_node('image_processor')
-	image = cv2.imread(PLAYCHESS_PKG_DIR + '/Images/IMAGES/camera_image1.jpeg') #/home/silvia/tiago_public_ws/src/tiago_playchess/Images_chessboard_empty/camera_image1.jpeg
+	image = cv2.imread('/home/pal/tiago_public_ws/src/playchess/image.png') #/home/silvia/tiago_public_ws/src/tiago_playchess/Images_chessboard_empty/camera_image1.jpeg
 	image_processing = ImageProcessing()
 	image_processing.segmentation_sequence(image)
 	cv2.waitKey(0)

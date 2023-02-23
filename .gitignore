@@ -1,10 +1,8 @@
 # Repo folders
 src/
 include/
-
-# Temporary game files
-*.pickle
-*.yaml
+.vscode/
+tmp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

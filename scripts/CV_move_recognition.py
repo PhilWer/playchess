@@ -1,4 +1,4 @@
-#!/home/luca/tiago_public_ws/src/vision_utils/pcd_venv/bin/python3
+#!/usr/bin/env python3
 #Processing of the pointcloud over the chessboard
 
 # Rospy for the subscriber
@@ -26,7 +26,7 @@ import config as cfg
 
 ready = False
 
-PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
+PLAYCHESS_PKG_DIR = '/home/pal/tiago_public_ws/src/tiago_playchess'
 
 #Publishers initialization
 state_publisher = rospy.Publisher('/state', Int16, queue_size = 10)
@@ -214,22 +214,22 @@ class DepthProcessing:
 	    #K: [list[list]] intrinsic camera matrix (3x3)
 	    #Format the arrays
 
-	    z = z[:, np.newaxis] # (N, 1)
-	    ones = np.ones((z.shape)) # (N, 1)
-	    uv = np.hstack((uv, ones, np.reciprocal(z))) # (N, 4)
-	    #Attach a dummy dimension so that matmul sees it as a stack of (4, 1) vectors
-	    uv = np.expand_dims(uv, axis = 2) # (N, 4, 1)
-	    
-	    #Invert the intrinsic matrix
-	    fx, S, cx, fy, cy = K[0], K[1], K[2], K[4], K[5] 
-	    K_inv = [   [1/fx, -S/(fx*fy), (S*cy-cx*fy)/(fx*fy), 0],
-	                [0, 1/fy, -cy/fy, 0],
-	                [0, 0, 1, 0],
-	                [0, 0, 0, 1]
-	            ]
-	    #Compute the spacial 3D coordinates for the points
-	    xyz = z[:, np.newaxis] * np.matmul(K_inv, uv)   # (N, 4, 1)
-	    return xyz[:, :3].reshape(-1, 3)  
+		z = z[:, np.newaxis] # (N, 1)
+		ones = np.ones((z.shape)) # (N, 1)
+		uv = np.hstack((uv, ones, np.reciprocal(z))) # (N, 4)
+		#Attach a dummy dimension so that matmul sees it as a stack of (4, 1) vectors
+		uv = np.expand_dims(uv, axis = 2) # (N, 4, 1)
+
+		#Invert the intrinsic matrix
+		fx, S, cx, fy, cy = K[0], K[1], K[2], K[4], K[5] 
+		K_inv = [   [1/fx, -S/(fx*fy), (S*cy-cx*fy)/(fx*fy), 0],
+					[0, 1/fy, -cy/fy, 0],
+					[0, 0, 1, 0],
+					[0, 0, 0, 1]
+				]
+		#Compute the spacial 3D coordinates for the points
+		xyz = z[:, np.newaxis] * np.matmul(K_inv, uv)   # (N, 4, 1)
+		return xyz[:, :3].reshape(-1, 3)  
 
 	def create_bounding_box(self, pcl, length, width, R, centro, reference_normal, box_extent, margin, translation):
 		#Function to create a bounding box given information about the PointCloud and the location of the desired box.
@@ -1690,11 +1690,11 @@ class DepthProcessing:
 	
 		RGB = [False, False, False]
 		if mean_RGB[0] > threshold[0]:
-			 RGB[0] = True
+				RGB[0] = True
 		if mean_RGB[1] > threshold[1]:
-			 RGB[1] = True
+				RGB[1] = True
 		if mean_RGB[2] > threshold[2]:
-			 RGB[2] = True
+				RGB[2] = True
 		opposite_RGB = [not RGB[0], not RGB[1], not RGB[2]]
 		if RGB == is_color_over:
 			piece_color = self.color

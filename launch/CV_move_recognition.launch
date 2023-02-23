@@ -2,7 +2,7 @@
 <launch>  
 
 	<!-- launch the node to manage the joystick commands in the different operational states -->
-	<node pkg = "tiago_playchess" type = "CV_move_recognition.py" name = "CV_move_recognition" required = "false" respawn = "true" output = "screen"/>
+	<node pkg = "playchess" type = "CV_move_recognition.py" name = "CV_move_recognition" required = "false" respawn = "true" output = "screen"/>
 
 
 </launch>

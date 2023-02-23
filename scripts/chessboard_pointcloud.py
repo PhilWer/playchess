@@ -26,8 +26,8 @@ from chessboard_image_processing import ImageProcessing
 import config as cfg
 
 
-PLAYCHESS_PKG_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
-GUI_PKG_DIR       = '/home/luca/tiago_public_ws/src/chess_gui'
+PLAYCHESS_PKG_DIR = '/home/pal/tiago_public_ws/src/playchess'
+GUI_SCRIPTS_DIR       = PLAYCHESS_PKG_DIR + '/scripts/gui'
 imported_chessboard_squares_pickle = PLAYCHESS_PKG_DIR + '/config/simul_config_not_transformed.pickle'
 imported_chessboard_vertices_pickle = PLAYCHESS_PKG_DIR + '/config/vertices_not_transformed.pickle'
 
@@ -56,11 +56,11 @@ class PlanningScene:
         #Initialize variables
         self.done = False #Flag to understand if the segmentation of the chessboard has been done correctly
 
-        self.simul_config = rospy.get_param('/tiago_playchess/simul_config')
-        self.simul_config_not_transformed = rospy.get_param('/tiago_playchess/simul_config_not_transformed')
-        self.chessboard_vertices_file = rospy.get_param('/tiago_playchess/chessboard_vertices')
-        self.chessboard_vertices_not_transformed_file = rospy.get_param('/tiago_playchess/chessboard_vertices_not_transformed')
-        self.z_coord_chessboard_mean = rospy.get_param('/tiago_playchess/z_coord_chessboard_mean')
+        self.simul_config = rospy.get_param('/playchess/simul_config')
+        self.simul_config_not_transformed = rospy.get_param('/playchess/simul_config_not_transformed')
+        self.chessboard_vertices_file = rospy.get_param('/playchess/chessboard_vertices')
+        self.chessboard_vertices_not_transformed_file = rospy.get_param('/playchess/chessboard_vertices_not_transformed')
+        self.z_coord_chessboard_mean = rospy.get_param('/playchess/z_coord_chessboard_mean')
 
         #Define TIAGo's interface
         self.scene = moveit_commander.PlanningSceneInterface() #The interface with the world surrounding the robot
@@ -112,19 +112,8 @@ class PlanningScene:
                 #print("Publishing the annotated image took " + str(time.time() - t))   # it takes up to 0.01s
                                                                                         # think about making this part optional, even at runtime through a param
                 
-                cv2.imwrite(os.path.join(GUI_PKG_DIR + '/images', 'segmentation_example.png'), annotated_img_np)
-                rospy.loginfo('Segmentation result image saved in the chess_gui/images folder')
-                '''
-                #Publish the annotated image of the veritces
-                annotated_img_msg_vertices = CompressedImage()
-                #Header and format
-                annotated_img_msg_vertices.header.stamp = rospy.Time.now()
-                annotated_img_msg_vertices.format = "jpeg"
-                #Actual image
-                annotated_img_msg_vertices.data = np.array(cv2.imencode('.jpg', annotated_img_np_vertices)[1]).tostring()
-                cv2.imwrite(os.path.join(GUI_PKG_DIR + '/images', 'vertices.png'), annotated_img_np_vertices)
-                rospy.loginfo('Vertices image saved in the chess_gui/images folder')
-                '''
+                cv2.imwrite(os.path.join(GUI_SCRIPTS_DIR + '/images', 'segmentation_example.png'), annotated_img_np)
+                rospy.loginfo('Segmentation result image saved in the `gui/images` folder')
 
                 #Get an iterable object from the pointcloud and use it to fill a numpy array of points (faster than point_cloud2.read_points_list)
                 depth_points_iterable = point_cloud2.read_points(pointcloud2, skip_nans = False, field_names = ("x", "y", "z"))

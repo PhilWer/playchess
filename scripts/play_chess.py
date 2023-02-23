@@ -25,11 +25,11 @@ from errors import ArucoException, PlanningException, StraightMovementError
 from color import Color
 from grasp_piece import Grasping
 
-PACKAGE_DIR = '/home/luca/tiago_public_ws/src/tiago_playchess'
-imported_configurations = PACKAGE_DIR + '/scripts/config/simulation_config.yaml'
+PLAYCHESS_PKG_DIR = '/home/pal/tiago_public_ws/src/playchess'
+imported_configurations = PLAYCHESS_PKG_DIR + '/scripts/config/simulation_config.yaml'
 
 ### TODO: set from launch
-ready = True # True if segmentation and search have been already performed, False otherwise
+ready = False # True if segmentation and search have been already performed, False otherwise
 
 # Callbacks definition
 ### TODO: move into class to avoid global variables
@@ -68,7 +68,7 @@ def CallbackSearchAgain(data):
 
 def CallbackPcSaved(data):
 	if data:
-		rospy.loginfo("Initial Pointcloud saved in the tiago_playchess/PointcloudForCalibration folder.")
+		rospy.loginfo("Initial Pointcloud saved in the playchess/PointcloudForCalibration folder.")
 		#Shutdown the pc_saver node
 		pc_saver_launcher.shutdown()
 
@@ -178,10 +178,10 @@ chess_move_not_exectuted_yet = True
 pc_saver_not_launched = True
 
 # Parameters loading
-z_coord_chessboard_mean_file = rospy.get_param('/tiago_playchess/z_coord_chessboard_mean')
-clock_pose_file = rospy.get_param('/tiago_playchess/clock_pose_file')
-box_pose_file = rospy.get_param('/tiago_playchess/box_pose_file')
-simul_config = rospy.get_param('/tiago_playchess/simul_config')
+z_coord_chessboard_mean_file = rospy.get_param('/playchess/z_coord_chessboard_mean')
+clock_pose_file = rospy.get_param('/playchess/clock_pose_file')
+box_pose_file = rospy.get_param('/playchess/box_pose_file')
+simul_config = rospy.get_param('/playchess/simul_config')
 
 class Playing:
 # Class with functions to make TIAGo wait for the move, to tell him what to move and, finally, 
@@ -208,7 +208,7 @@ class Playing:
 		self.knight = cfg.knight
 
 		# Load configurations
-		self.config_file = rospy.get_param('/tiago_playchess/config')		
+		self.config_file = rospy.get_param('/playchess/config')		
 		with open(self.config_file) as file:
 			self.config = yaml.load(file)
 
@@ -221,7 +221,7 @@ class Playing:
 		self.pieces_coordinates = cfg.pieces_coordinates
 
 		# Directory of the live chessboard situation
-		self.dir_live_chessboard_situation = PACKAGE_DIR + "/scripts/live_chessboard_situation.yaml"
+		self.dir_live_chessboard_situation = PLAYCHESS_PKG_DIR + "/scripts/live_chessboard_situation.yaml"
 
 		self.columns = cfg.columns_explicit
 
@@ -728,9 +728,6 @@ class Playing:
 			clear_octomap()
 
 
-
-
-
 if __name__ == '__main__':
 	global tempo_mossa
 	try:
@@ -742,7 +739,7 @@ if __name__ == '__main__':
 
 			elif state.data == 4: #State of chessboard segmentation.
 				if segmentation_not_launched:
-					segmentation_launcher = roslauncher.roslaunch_from_file(PACKAGE_DIR + '/launch/segmentation.launch')
+					segmentation_launcher = roslauncher.roslaunch_from_file(PLAYCHESS_PKG_DIR + '/launch/segmentation.launch')
 					segmentation_not_launched = False
 
 			elif state.data == 5: #State of asking confirmation for the chessboard segmentation
@@ -751,16 +748,16 @@ if __name__ == '__main__':
 
 				#Launch the CV depth images processing.
 				if CV_launcher_not_launched:
-					CV_launcher = roslauncher.roslaunch_from_file(PACKAGE_DIR + '/launch/CV_move_recognition.launch')
-					print(PACKAGE_DIR + '/launch/CV_move_recognition.launch')
+					CV_launcher = roslauncher.roslaunch_from_file(PLAYCHESS_PKG_DIR + '/launch/CV_move_recognition.launch')
+					print(PLAYCHESS_PKG_DIR + '/launch/CV_move_recognition.launch')
 					CV_launcher_not_launched = False
 			
 			elif state.data == 7: #State of search for ARUCO markers.
 				if aruco_detector_not_launched:
-					aruco_launcher = roslauncher.roslaunch_from_file(PACKAGE_DIR + '/launch/multi_detector.launch')
+					aruco_launcher = roslauncher.roslaunch_from_file(PLAYCHESS_PKG_DIR + '/launch/multi_detector.launch')
 					aruco_detector_not_launched = False
 				if pc_saver_not_launched:
-					pc_saver_launcher = roslauncher.roslaunch_from_file(PACKAGE_DIR + '/launch/pc_saver.launch')
+					pc_saver_launcher = roslauncher.roslaunch_from_file(PLAYCHESS_PKG_DIR + '/launch/pc_saver.launch')
 					pc_saver_not_launched = False
 
 			elif state.data == 40: #State of asking for the markers localization confirmation.

@@ -2,6 +2,14 @@
 
 This package implements a robotic assistant for motion-impaired chess player. To date, the robot cannot play autonomously. The main goal of the application is the robust execution of the moves requested by the player via an accessible interface (joystick, touchpad, mouse, vocal command) using the standard chess equipment used in official competitions.
 
+# How to install
+
+- Install the required libraries from `requirements.txt`... TODO.
+
+- Adapt the path in the scripts in `scripts` folder, to make `PLAYCHESS_PKG_DIR` point to the actual location of the package in the local machine. TODO. Set automatically at launch.
+
+- Adapt the shebangs to point to a valid Python interpreter
+
 # How to use
 
 ## TIAGo robot
@@ -28,7 +36,7 @@ _Add article in `bib` format._
 
 - [ ] add documentation
   - [ ] add documentation inside the code
-  - [ ] add user instructions to the README
+  - [x] add user instructions to the README
 
 ## Setup
 
@@ -48,7 +56,7 @@ _Add article in `bib` format._
   - [ ] avoid duplicates
   - [ ] expose topics for remapping
   - [ ] remove hardcodings
-- [ ] remove Open3D dependency
+- ~~[ ] remove Open3D dependency~~
 
 ## Usability
 
@@ -61,4 +69,8 @@ _Add article in `bib` format._
   - [ ] initial setup (complete game setup with ArUCo)
   - [ ] chessboard only
   - [ ] chess-set only
-- [ ] tidy the package (e.g. temporary files to `temp` -or similar- folder)
+- [ ] tidy the package (e.g. temporary files to `tmp` -or similar- folder)
+  - [ ] `PointcloudForCalibration` should move to `tmp`
+  - [ ] `gui\images\markers_localization.png` should move to `tmp`
+  - [ ] `gui\images\segmentation_example.png` should move to `tmp` and renamed to `square_centers.png`
+- [ ] create a map of GUI screens and associated script in `scripts/gui`

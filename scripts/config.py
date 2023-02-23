@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+PLAYCHESS_PKG_DIR = "/home/pal/tiago_public_ws/src/playchess"
+GUI_SCRIPTS_DIR   = PLAYCHESS_PKG_DIR + "/scripts/gui"
+
 #Pieces characteristics
 king = {
 'name': 'king',
