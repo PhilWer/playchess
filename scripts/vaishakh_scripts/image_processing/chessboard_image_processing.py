@@ -119,7 +119,7 @@ class ImageProcessing():
         # Find countours
         # NOTE. The if statement makes it (hopefully) compatible with all the OpenCV versions.
         # From: https://stackoverflow.com/questions/20851365/opencv-contours-need-more-than-2-values-to-unpack
-        if cv2.getVersionMajor() in [2, 4]:
+        if cv2.__version__.split(".")[0] in [2, 4]:
             # OpenCV 2, OpenCV 4 case
             contours, __ = cv2.findContours(preprocessed_img.copy(), 
                                                   cv2.RETR_TREE, 
