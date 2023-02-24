@@ -7,6 +7,7 @@ import moveit_commander
 
 # Import Python libraries
 import sys
+import os
 import yaml
 import math
 from time import time
@@ -730,6 +731,9 @@ class Playing:
 
 if __name__ == '__main__':
 	global tempo_mossa
+	# Check that the folder used to store temporary files and data for reproducibility are in the package
+	try: 
+		os.mkdir('')
 	try:
 		while not rospy.is_shutdown():
 			if state.data == 1: #State of TIAGO initialization.

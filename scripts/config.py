@@ -497,9 +497,3 @@ starting_chessboard_situation_complete = {
 'b8': ['knight_b8', 'black'],
 'a8': ['rook_a8', 'black']
 }
-
-
-
-#ARUCO markers configurations
-aruco_clock = 100
-aruco_box = 300

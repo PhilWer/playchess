@@ -3,6 +3,8 @@
 	<!-- ARGS -->
 	<!-- load the proper config file  -->
 	<arg name = "config" 	default = "standard" />
+	<!-- WARNING. Set `ready` to True if and only if the setup has not changed (i.e. nor the robot nor the equipment moved). -->
+	<arg name = "ready"		default = "False" /> 	<!-- set to True to keep playing the last game (i.e. file in `/tmp` are not overridden) -->
 	<arg name = "joystick"	default = "True" />		<!-- wheter using the Ottobock joystick or not -->
 	<arg name = "clock_btn" default = "False" />	<!-- wheter using an Arduino-controlled button to check for clock presses or not -->
 	<!-- Set the serial port parameters to connect to the Arduino board -->
@@ -13,28 +15,29 @@
 	<param name = "playchess/config" type = "str" value = "$(find playchess)/scripts/config/$(arg config)_config.yaml" />
 	<param name = "playchess/simul_config" type = "str" value = "$(find playchess)/config/simul_config.yaml" />
 	<param name = "playchess/simul_config_not_transformed" type = "str" value = "$(find playchess)/config/simul_config_not_transformed.yaml" />
+	<param name = "playchess/root" type = "str" value = "$(find playchess)" />
+	<!-- NOTE. Why are the following parameters imported when launching the game? -->
 	<param name = "playchess/chessboard_vertices" type = "str" value = "$(find playchess)/config/chessboard_vertices.yaml" />
 	<param name = "playchess/chessboard_vertices_not_transformed" type = "str" value = "$(find playchess)/config/chessboard_vertices_not_transformed.yaml" />
 	<param name = "playchess/z_coord_chessboard_mean" type = "str" value = "$(find playchess)/config/z_coord_chessboard_mean.yaml" />
 	<param name = "playchess/clock_pose_file" type = "str" value = "$(find playchess)/config/clock_pose_file.yaml" />
 	<param name = "playchess/box_pose_file" type = "str" value = "$(find playchess)/config/box_pose_file.yaml" />
 
-	<!-- Rviz config (i.e. what is displayed by default in Rviz) -->
-	<arg name="command_args" value="-d $(find playchess)/rviz/tiago_chess.rviz" />
-
 	<!-- Import params for the playmotion movements-->
-	<rosparam command="load" file="$(find playchess)/config/playmotion_movements.yaml" />
+	<rosparam command = "load" file = "$(find playchess)/config/playmotion_movements.yaml" />
 
 	<!-- NODES -->
-
 	<!-- launch the node to manage the different operational states -->
-	<node pkg = "playchess" type = "play_chess.py" name = "play_chess" required = "false" output = "screen"/>
-
-	<!-- launch the node to manage the joystick commands in the different operational states -->
-	<node pkg = "playchess" type = "joystick_command.py" name = "joystick_command" required = "false" output = "screen"/>
+	<node pkg = "playchess" type = "play_chess.py" name = "play_chess"
+	args = "$(arg ready)" required = "false" output = "screen" />
 
 	<!-- launch the GUI -->
-	<node pkg = "playchess" type = "play_chess_gui.py" name = "play_chess_gui" required = "false" output = "screen"/>
+	<node pkg = "playchess" type = "play_chess_gui.py" name = "play_chess_gui" 
+	 args = "$(arg ready)" required = "false" output = "screen"/>
+
+	<!-- launch the node to manage the joystick commands in the different operational states -->
+	<node pkg = "playchess" type = "joystick_command.py" name = "joystick_command" 
+	required = "false" output = "log" if = "$(arg joystick)" />
 
 	<!-- launch the node to read the serial port connected to the pushbutton -->
 	<node pkg = "rosserial_python" type = "serial_node.py" name = "serial_node" 

@@ -73,4 +73,5 @@ _Add article in `bib` format._
   - [ ] `PointcloudForCalibration` should move to `tmp`
   - [ ] `gui\images\markers_localization.png` should move to `tmp`
   - [ ] `gui\images\segmentation_example.png` should move to `tmp` and renamed to `square_centers.png`
+  - [ ] nest scripts (e.g. `gui`, `vision`, `motion`, `interface`, `config`)
 - [ ] create a map of GUI screens and associated script in `scripts/gui`

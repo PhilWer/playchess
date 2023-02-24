@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Rviz config (i.e. what is displayed by default in Rviz) -->
+	<arg name="command_args" value="-d $(find playchess)/rviz/tiago_chess.rviz" />
+    <!-- Launch rviz with the selected config -->
+	<node name="$(anon rviz)" pkg="rviz" type="rviz" 
+    respawn="false" args="$(arg command_args)" output="screen"/>-->  
+
+</launch>
