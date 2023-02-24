@@ -26,176 +26,22 @@ from errors import ArucoException, PlanningException, StraightMovementError
 from color import Color
 from grasp_piece import Grasping
 
-PLAYCHESS_PKG_DIR = '/home/pal/tiago_public_ws/src/playchess'
-imported_configurations = PLAYCHESS_PKG_DIR + '/scripts/config/simulation_config.yaml'
-
-### TODO: set from launch
-ready = False # True if segmentation and search have been already performed, False otherwise
-
-# Callbacks definition
-### TODO: move into class to avoid global variables
-def Callback_State(data):
-    state.data = data.data
-
-def CallbackStartSquare(data):
-	global start_square
-	start_square = data.data
-	#print('START SQUARE: '+str(start_square))
-
-def CallbackEndSquare(data):
-	global end_square
-	end_square = data.data
-	#print('END SQUARE: '+str(end_square))
-
-def CallbackPushbutton(data):
-	if data and state.data == 14:
-		rospy.loginfo("The button has been pushed, so the opponent move has been executed." + 
-					  " Start looking for the just executed move.")
-		state_publisher.publish(15)
-
-def CallbackSegmentAgain(data):
-	if data:
-		rospy.loginfo("Perform segmentation again.")
-		#Change the flag
-		global segmentation_not_launched
-		segmentation_not_launched = True
-
-def CallbackSearchAgain(data):
-	if data:
-		rospy.loginfo("Perform ARUCO markers search again.")
-		#Change the flag
-		global aruco_detector_not_launched
-		aruco_detector_not_launched = True
-
-def CallbackPcSaved(data):
-	if data:
-		rospy.loginfo("Initial Pointcloud saved in the playchess/PointcloudForCalibration folder.")
-		#Shutdown the pc_saver node
-		pc_saver_launcher.shutdown()
-
-def CallbackEnPassantSquare(data):
-	global en_passant_square
-	en_passant_square = data.data
-	print('EN PASSANT SQUARE: ' + str(en_passant_square))
-
-
-def squares_from_rows(rows):	### TODO: use instead of hardcoding
-	'''
-	rows 	[int list] index of the rows
-	----------
-	squares [str list] squares in the given rows (letter are lowercase)
-	'''
-	return [chr(97 + i) + str(row) for row in rows for i in range(8)]	# chr(97) -> 'a'
-
-def Color_Callback(data):
-		global color
-		global last_squares
-		global first_squares
-		global squares_to_index
-		color = data.data
-		if color == 'white':
-			squares_to_index = cfg.squares_to_index_white
-			last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
-							'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
-						   ]
-			first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
-							 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
-							]
-		elif color == 'black':
-			squares_to_index = cfg.squares_to_index_black
-			last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
-							'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'
-						   ]
-			first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
-							 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
-							]
-
-def Move_the_arm_Callback(data):
-		if data:
-			### NOTE: the look_up and look_down movements are TIAGo-specific
-			grasper.look_up() # look up to avoid head-arm collisions 
-			time.sleep(2)
-			grasper.move_arm_joint(0.471)	### TODO: set a rest pose from launch file
-			time.sleep(2)
-			grasper.look_down() # look down at the chessboard
-
-
-
-if ready:
-	global last_squares
-	global first_squares
-	global color
-	global squares_to_index
-	with open(imported_configurations) as file:
-		configurazioni = yaml.load(file)
-		color = configurazioni.get('color')
-	if color == 'white':
-		squares_to_index = cfg.squares_to_index_white
-		last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
-						'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
-					   ]
-		first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
-						 'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
-						]
-	elif color == 'black':
-		squares_to_index = cfg.squares_to_index_black
-		last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
-						'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
-					   ]
-		first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
-						 'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
-						]
-
-# Starts a new node
-rospy.init_node('play_chess', anonymous = True)
-
-# Publishers initialization
-state_publisher = rospy.Publisher('/state', Int16, queue_size = 10)
-
-# Subscribers initialization
-rospy.Subscriber("/state", Int16, Callback_State)
-rospy.Subscriber('/start_square', String, CallbackStartSquare)
-rospy.Subscriber('/end_square', String, CallbackEndSquare)
-rospy.Subscriber('/pushed', Bool, CallbackPushbutton)
-rospy.Subscriber('/segment_again', Bool, CallbackSegmentAgain)
-rospy.Subscriber('/search_again', Bool, CallbackSearchAgain)
-rospy.Subscriber('/pc_saved', Bool, CallbackPcSaved)
-rospy.Subscriber('/en_passant_square_to_move', String, CallbackEnPassantSquare)
-rospy.Subscriber("/color", String, Color_Callback)
-rospy.Subscriber("/move_the_arm", Bool, Move_the_arm_Callback)
-
-
-# Messages initialization
-state = Int16()
-state.data = 0
-
-en_passant_square = 'none'
-
-# Flags initialization
-segmentation_not_launched = True
-aruco_detector_not_launched = True
-CV_launcher_not_launched = True
-chess_move_not_exectuted_yet = True
-pc_saver_not_launched = True
-
-# Parameters loading
-z_coord_chessboard_mean_file = rospy.get_param('/playchess/z_coord_chessboard_mean')
-clock_pose_file = rospy.get_param('/playchess/clock_pose_file')
-box_pose_file = rospy.get_param('/playchess/box_pose_file')
-simul_config = rospy.get_param('/playchess/simul_config')
 
 class Playing:
 # Class with functions to make TIAGo wait for the move, to tell him what to move and, finally, 
 # to make him perform the move.
 
 	def __init__(self):
+		# Publishers initialization
+		self.state_publisher = rospy.Publisher('/state', Int16, queue_size = 10)
+		# Messages initialization
+		self.state = Int16()
+		self.state.data = 0
+
 		# Initialize a MoveIt commander
 		moveit_commander.roscpp_initialize(sys.argv)
 		# MoveIt utilities
 		self.motions = Grasping()
-
-		# Subscribers initialization
-		#rospy.Subscriber("/move_the_arm", Bool, self.Move_the_arm_Callback)
 
 		# Define the interface with the robot's representation of the surrounding environment 
 		self.scene = moveit_commander.PlanningSceneInterface() 		
@@ -205,7 +51,7 @@ class Playing:
 		self.rook = cfg.rook
 		self.bishop = cfg.bishop
 		self.king = cfg.king
-		self.queen = cfg.queen
+		self.queen = cfg.queenf
 		self.knight = cfg.knight
 
 		# Load configurations
@@ -228,6 +74,19 @@ class Playing:
 
 		self.transformed_centroids = None
 		self.box_marker_pose = None
+
+		# Subscribers initialization
+		rospy.Subscriber("/state", Int16, self.CallbackState)
+		rospy.Subscriber('/start_square', String, self.CallbackStartSquare)
+		rospy.Subscriber('/end_square', String, self.CallbackEndSquare)
+		rospy.Subscriber('/pushed', Bool, self.CallbackPushbutton)
+		rospy.Subscriber('/segment_again', Bool, self.CallbackSegmentAgain)
+		rospy.Subscriber('/search_again', Bool, self.CallbackSearchAgain)
+		rospy.Subscriber('/pc_saved', Bool, self.CallbackPcSaved)
+		rospy.Subscriber('/en_passant_square_to_move', String, self.CallbackEnPassantSquare)
+		rospy.Subscriber("/color", String, self.CallbackColor)
+		rospy.Subscriber("/move_the_arm", Bool, self.CallbackMoveArm)
+
 
 	def chess_move(self, start_place, end_place, centroids, clock_pose, box_pose, z_coord_chessboard):
 		#en_passant_square = 'none'
@@ -728,13 +587,154 @@ class Playing:
 			clear_octomap = rospy.ServiceProxy('/clear_octomap', Empty)     # (in a controlled environment) would spare some time
 			clear_octomap()
 
+	#################
+	### CALLBACKS ###
+	#################
+	def CallbackState(self, data):
+		self.state.data = data.data
+
+	def CallbackStartSquare(self, data):
+		global start_square
+		start_square = data.data
+
+	def CallbackEndSquare(self, data):
+		global end_square
+		end_square = data.data
+
+	def CallbackPushbutton(self, data):
+		if data and self.state.data == 14:
+			rospy.loginfo("The button has been pushed. Starting move recognition...")
+			self.state_publisher.publish(15)
+
+	def CallbackSegmentAgain(self, data):
+		if data:
+			rospy.loginfo("Perform segmentation again.")
+			# Change the flag
+			global segmentation_not_launched
+			segmentation_not_launched = True
+
+	def CallbackSearchAgain(self, data):
+		if data:
+			rospy.loginfo("Perform ARUCO markers search again.")
+			#Change the flag
+			global aruco_detector_not_launched
+			aruco_detector_not_launched = True
+
+	def CallbackPcSaved(self, data):
+		if data:
+			rospy.loginfo("Initial Pointcloud saved in the playchess/PointcloudForCalibration folder.")
+			#Shutdown the pc_saver node
+			pc_saver_launcher.shutdown()
+
+	def CallbackEnPassantSquare(self, data):
+		global en_passant_square
+		en_passant_square = data.data
+		print('EN PASSANT SQUARE: ' + str(en_passant_square))
+
+
+	def Color_Callback(self, data):
+			global color
+			global last_squares
+			global first_squares
+			global squares_to_index
+			color = data.data
+			if color == 'white':
+				squares_to_index = cfg.squares_to_index_white
+				last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+								'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+							]
+				first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+								'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
+								]
+			elif color == 'black':
+				squares_to_index = cfg.squares_to_index_black
+				last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+								'a2', 'b2', 'c2', 'd2', 'e2', 'f2', 'g2', 'h2'
+							]
+				first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+								'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+								]
+
+	def Move_the_arm_Callback(self, data):
+			if data:
+				### NOTE: the look_up and look_down movements are TIAGo-specific
+				grasper.look_up() # look up to avoid head-arm collisions 
+				time.sleep(2)
+				grasper.move_arm_joint(0.471)	### TODO: set a rest pose from launch file
+				time.sleep(2)
+				grasper.look_down() # look down at the chessboard
+	
+	#############
+	### UTILS ###
+	#############
+	def squares_from_rows(rows):	### TODO: use instead of hardcoding
+		'''
+		rows 	[int list] index of the rows
+		----------
+		squares [str list] squares in the given rows (letter are lowercase)
+		'''
+		return [chr(97 + i) + str(row) for row in rows for i in range(8)]	# chr(97) -> 'a'
+
 
 if __name__ == '__main__':
+	if len(sys.argv[1:]) != 1:	# sys.argv[0] is the script name
+		raise TypeError('The `play_chess` node takes exactly one arg `ready` of type `bool`,' 
+		  				'{} args were given'.format(len(sys.argv[1:]))
+						)
+	else:
+		ready = bool(sys.argv[1])
+
+	PLAYCHESS_PKG_DIR = '/home/pal/tiago_public_ws/src/playchess'
+	imported_configurations = PLAYCHESS_PKG_DIR + '/scripts/config/simulation_config.yaml'
+
+	if ready:
+		global last_squares
+		global first_squares
+		global color
+		global squares_to_index
+		with open(imported_configurations) as file:
+			configurazioni = yaml.load(file)
+			color = configurazioni.get('color')
+		if color == 'white':
+			squares_to_index = cfg.squares_to_index_white
+			last_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+							'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+						]
+			first_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+							'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
+							]
+		elif color == 'black':
+			squares_to_index = cfg.squares_to_index_black
+			last_squares = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1', 
+							'a2', 'b2', 'c2', 'd2','e2', 'f2', 'g2', 'h2'
+						]
+			first_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8', 
+							'a7', 'b7', 'c7', 'd7','e7', 'f7', 'g7', 'h7'
+							]
+
+	# Starts a new node
+	rospy.init_node('play_chess', anonymous = True)
+
+
+	en_passant_square = 'none'
+
+	# Flags initialization
+	segmentation_not_launched = True
+	aruco_detector_not_launched = True
+	CV_launcher_not_launched = True
+	chess_move_not_exectuted_yet = True
+	pc_saver_not_launched = True
+
+	# Parameters loading
+	z_coord_chessboard_mean_file = rospy.get_param('/playchess/z_coord_chessboard_mean')
+	clock_pose_file = rospy.get_param('/playchess/clock_pose_file')
+	box_pose_file = rospy.get_param('/playchess/box_pose_file')
+	simul_config = rospy.get_param('/playchess/simul_config')
 	global tempo_mossa
 	# Check that the folder used to store temporary files and data for reproducibility are in the package
-	try: 
-		os.mkdir('')
-	try:
+	#try: 
+	#	os.mkdir('')
+	try: # TODO. Move to a dedicated script  `state_machine.py``
 		while not rospy.is_shutdown():
 			if state.data == 1: #State of TIAGO initialization.
 				grasper = Grasping()

@@ -28,12 +28,14 @@
 
 	<!-- NODES -->
 	<!-- launch the node to manage the different operational states -->
-	<node pkg = "playchess" type = "play_chess.py" name = "play_chess"
+	<node pkg = "playchess" type = "play_chess.py" name = "play_chess" 
 	args = "$(arg ready)" required = "false" output = "screen" />
 
 	<!-- launch the GUI -->
 	<node pkg = "playchess" type = "play_chess_gui.py" name = "play_chess_gui" 
-	 args = "$(arg ready)" required = "false" output = "screen"/>
+	required = "false" output = "screen" unless = "$(arg ready)" />
+	<node pkg = "playchess" type = "play_chess_gui_pronto.py" name = "play_chess_gui" 
+	required = "false" output = "screen" if = "$(arg ready)" />
 
 	<!-- launch the node to manage the joystick commands in the different operational states -->
 	<node pkg = "playchess" type = "joystick_command.py" name = "joystick_command" 
