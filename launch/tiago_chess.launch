@@ -12,10 +12,12 @@
 	<arg name = "baud" 		default = "57600" />
 
 	<!-- PARAMS -->
+	<param name = "playchess/root" type = "str" value = "$(find playchess)" />
+	
 	<param name = "playchess/config" type = "str" value = "$(find playchess)/scripts/config/$(arg config)_config.yaml" />
 	<param name = "playchess/simul_config" type = "str" value = "$(find playchess)/config/simul_config.yaml" />
 	<param name = "playchess/simul_config_not_transformed" type = "str" value = "$(find playchess)/config/simul_config_not_transformed.yaml" />
-	<param name = "playchess/root" type = "str" value = "$(find playchess)" />
+	
 	<!-- NOTE. Why are the following parameters imported when launching the game? -->
 	<param name = "playchess/chessboard_vertices" type = "str" value = "$(find playchess)/config/chessboard_vertices.yaml" />
 	<param name = "playchess/chessboard_vertices_not_transformed" type = "str" value = "$(find playchess)/config/chessboard_vertices_not_transformed.yaml" />
