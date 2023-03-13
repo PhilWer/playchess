@@ -67,7 +67,7 @@ H8: [0, 0, 0]
 OFFSET: 0.23
 aruco: false
 clear_octomap: false
-color: white
+color: black
 escape_strategy: nearby
 full_setup: true
 goal_position_tolerance: 0.001

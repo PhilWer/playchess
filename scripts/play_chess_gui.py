@@ -50,6 +50,7 @@ square_object = 'none'
 square_captured_piece = 'none'
 simul_config = rospy.get_param('/playchess/simul_config')
 imported_configurations = PLAYCHESS_PKG_DIR + '/scripts/config/simulation_config.yaml'
+imported_configurations_std = PLAYCHESS_PKG_DIR + '/scripts/config/standard_config.yaml'
 
 #Defines
 pawns_w = ['pawn_a2', 'pawn_b2', 'pawn_c2', 'pawn_d2', 'pawn_e2', 'pawn_f2', 'pawn_g2', 'pawn_h2']
@@ -357,6 +358,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_InitializationWindow):
         global color
         color = data.data
         ################
+        with open(imported_configurations_std) as file:
+            params = yaml.load(file, Loader = yaml.Loader)
+        params['color'] = color
+        with open(imported_configurations_std, "w") as t_p:
+            yaml.dump(params, t_p)
+        ##########################################for passing tiago color to segmentation function in chess
         with open(imported_configurations) as file:
             params = yaml.load(file, Loader = yaml.Loader)
         params['color'] = color

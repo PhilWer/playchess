@@ -68,7 +68,7 @@ OFFSET_X_CHESSBOARD: -0.575
 OFFSET_Y_CHESSBOARD: 0.25
 aruco: true
 clear_octomap: true
-color: white
+color: black
 escape_strategy: nearby
 full_setup: true
 goal_position_tolerance: 0.001

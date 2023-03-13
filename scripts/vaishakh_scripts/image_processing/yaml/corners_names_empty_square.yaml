@@ -1,0 +1,738 @@
+- !!python/tuple
+  - !!python/tuple
+    - 183
+    - 127
+  - &id001 !!python/tuple
+    - 219
+    - 126
+  - &id002 !!python/tuple
+    - 217
+    - 150
+  - &id015 !!python/tuple
+    - 180
+    - 151
+  - !!python/tuple
+    - 199
+    - 138
+  - a8
+- !!python/tuple
+  - *id001
+  - &id003 !!python/tuple
+    - 254
+    - 125
+  - &id004 !!python/tuple
+    - 253
+    - 149
+  - *id002
+  - !!python/tuple
+    - 235
+    - 137
+  - b8
+- !!python/tuple
+  - *id003
+  - &id005 !!python/tuple
+    - 290
+    - 124
+  - &id006 !!python/tuple
+    - 290
+    - 147
+  - *id004
+  - !!python/tuple
+    - 271
+    - 136
+  - c8
+- !!python/tuple
+  - *id005
+  - &id007 !!python/tuple
+    - 323
+    - 124
+  - &id008 !!python/tuple
+    - 325
+    - 146
+  - *id006
+  - !!python/tuple
+    - 307
+    - 135
+  - d8
+- !!python/tuple
+  - *id007
+  - &id009 !!python/tuple
+    - 359
+    - 123
+  - &id010 !!python/tuple
+    - 362
+    - 145
+  - *id008
+  - !!python/tuple
+    - 342
+    - 134
+  - e8
+- !!python/tuple
+  - *id009
+  - &id011 !!python/tuple
+    - 395
+    - 122
+  - &id012 !!python/tuple
+    - 399
+    - 143
+  - *id010
+  - !!python/tuple
+    - 378
+    - 133
+  - f8
+- !!python/tuple
+  - *id011
+  - &id013 !!python/tuple
+    - 429
+    - 121
+  - &id014 !!python/tuple
+    - 435
+    - 142
+  - *id012
+  - !!python/tuple
+    - 414
+    - 132
+  - g8
+- !!python/tuple
+  - *id013
+  - !!python/tuple
+    - 464
+    - 121
+  - &id022 !!python/tuple
+    - 470
+    - 141
+  - *id014
+  - !!python/tuple
+    - 449
+    - 131
+  - h8
+- !!python/tuple
+  - *id015
+  - *id002
+  - &id016 !!python/tuple
+    - 214
+    - 177
+  - &id024 !!python/tuple
+    - 176
+    - 179
+  - !!python/tuple
+    - 196
+    - 164
+  - a7
+- !!python/tuple
+  - *id002
+  - *id004
+  - &id017 !!python/tuple
+    - 252
+    - 176
+  - *id016
+  - !!python/tuple
+    - 234
+    - 163
+  - b7
+- !!python/tuple
+  - *id004
+  - *id006
+  - &id018 !!python/tuple
+    - 291
+    - 175
+  - *id017
+  - !!python/tuple
+    - 271
+    - 161
+  - c7
+- !!python/tuple
+  - *id006
+  - *id008
+  - &id019 !!python/tuple
+    - 327
+    - 173
+  - *id018
+  - !!python/tuple
+    - 308
+    - 160
+  - d7
+- !!python/tuple
+  - *id008
+  - *id010
+  - &id020 !!python/tuple
+    - 366
+    - 172
+  - *id019
+  - !!python/tuple
+    - 345
+    - 159
+  - e7
+- !!python/tuple
+  - *id010
+  - *id012
+  - &id021 !!python/tuple
+    - 404
+    - 171
+  - *id020
+  - !!python/tuple
+    - 382
+    - 157
+  - f7
+- !!python/tuple
+  - *id012
+  - *id014
+  - &id023 !!python/tuple
+    - 441
+    - 169
+  - *id021
+  - !!python/tuple
+    - 419
+    - 156
+  - g7
+- !!python/tuple
+  - *id014
+  - *id022
+  - &id031 !!python/tuple
+    - 478
+    - 168
+  - *id023
+  - !!python/tuple
+    - 456
+    - 155
+  - h7
+- !!python/tuple
+  - *id024
+  - *id016
+  - &id025 !!python/tuple
+    - 211
+    - 209
+  - &id033 !!python/tuple
+    - 171
+    - 212
+  - !!python/tuple
+    - 193
+    - 194
+  - a6
+- !!python/tuple
+  - *id016
+  - *id017
+  - &id026 !!python/tuple
+    - 251
+    - 207
+  - *id025
+  - !!python/tuple
+    - 232
+    - 192
+  - b6
+- !!python/tuple
+  - *id017
+  - *id018
+  - &id027 !!python/tuple
+    - 291
+    - 205
+  - *id026
+  - !!python/tuple
+    - 271
+    - 190
+  - c6
+- !!python/tuple
+  - *id018
+  - *id019
+  - &id028 !!python/tuple
+    - 330
+    - 203
+  - *id027
+  - !!python/tuple
+    - 309
+    - 189
+  - d6
+- !!python/tuple
+  - *id019
+  - *id020
+  - &id029 !!python/tuple
+    - 370
+    - 201
+  - *id028
+  - !!python/tuple
+    - 348
+    - 187
+  - e6
+- !!python/tuple
+  - *id020
+  - *id021
+  - &id030 !!python/tuple
+    - 410
+    - 199
+  - *id029
+  - !!python/tuple
+    - 387
+    - 185
+  - f6
+- !!python/tuple
+  - *id021
+  - *id023
+  - &id032 !!python/tuple
+    - 448
+    - 197
+  - *id030
+  - !!python/tuple
+    - 425
+    - 184
+  - g6
+- !!python/tuple
+  - *id023
+  - *id031
+  - &id040 !!python/tuple
+    - 486
+    - 195
+  - *id032
+  - !!python/tuple
+    - 463
+    - 182
+  - h6
+- !!python/tuple
+  - *id033
+  - *id025
+  - &id034 !!python/tuple
+    - 209
+    - 242
+  - &id042 !!python/tuple
+    - 167
+    - 244
+  - !!python/tuple
+    - 189
+    - 226
+  - a5
+- !!python/tuple
+  - *id025
+  - *id026
+  - &id035 !!python/tuple
+    - 250
+    - 240
+  - *id034
+  - !!python/tuple
+    - 230
+    - 224
+  - b5
+- !!python/tuple
+  - *id026
+  - *id027
+  - &id036 !!python/tuple
+    - 292
+    - 238
+  - *id035
+  - !!python/tuple
+    - 271
+    - 222
+  - c5
+- !!python/tuple
+  - *id027
+  - *id028
+  - &id037 !!python/tuple
+    - 333
+    - 236
+  - *id036
+  - !!python/tuple
+    - 311
+    - 220
+  - d5
+- !!python/tuple
+  - *id028
+  - *id029
+  - &id038 !!python/tuple
+    - 374
+    - 233
+  - *id037
+  - !!python/tuple
+    - 351
+    - 218
+  - e5
+- !!python/tuple
+  - *id029
+  - *id030
+  - &id039 !!python/tuple
+    - 416
+    - 231
+  - *id038
+  - !!python/tuple
+    - 392
+    - 216
+  - f5
+- !!python/tuple
+  - *id030
+  - *id032
+  - &id041 !!python/tuple
+    - 456
+    - 229
+  - *id039
+  - !!python/tuple
+    - 432
+    - 214
+  - g5
+- !!python/tuple
+  - *id032
+  - *id040
+  - &id049 !!python/tuple
+    - 496
+    - 227
+  - *id041
+  - !!python/tuple
+    - 471
+    - 212
+  - h5
+- !!python/tuple
+  - *id042
+  - *id034
+  - &id043 !!python/tuple
+    - 206
+    - 277
+  - &id051 !!python/tuple
+    - 162
+    - 279
+  - !!python/tuple
+    - 186
+    - 260
+  - a4
+- !!python/tuple
+  - *id034
+  - *id035
+  - &id044 !!python/tuple
+    - 249
+    - 275
+  - *id043
+  - !!python/tuple
+    - 228
+    - 258
+  - b4
+- !!python/tuple
+  - *id035
+  - *id036
+  - &id045 !!python/tuple
+    - 292
+    - 272
+  - *id044
+  - !!python/tuple
+    - 270
+    - 256
+  - c4
+- !!python/tuple
+  - *id036
+  - *id037
+  - &id046 !!python/tuple
+    - 336
+    - 270
+  - *id045
+  - !!python/tuple
+    - 313
+    - 254
+  - d4
+- !!python/tuple
+  - *id037
+  - *id038
+  - &id047 !!python/tuple
+    - 379
+    - 268
+  - *id046
+  - !!python/tuple
+    - 355
+    - 251
+  - e4
+- !!python/tuple
+  - *id038
+  - *id039
+  - &id048 !!python/tuple
+    - 423
+    - 265
+  - *id047
+  - !!python/tuple
+    - 398
+    - 249
+  - f4
+- !!python/tuple
+  - *id039
+  - *id041
+  - &id050 !!python/tuple
+    - 465
+    - 263
+  - *id048
+  - !!python/tuple
+    - 440
+    - 247
+  - g4
+- !!python/tuple
+  - *id041
+  - *id049
+  - &id058 !!python/tuple
+    - 507
+    - 261
+  - *id050
+  - !!python/tuple
+    - 481
+    - 245
+  - h4
+- !!python/tuple
+  - *id051
+  - *id043
+  - &id052 !!python/tuple
+    - 202
+    - 316
+  - &id060 !!python/tuple
+    - 156
+    - 318
+  - !!python/tuple
+    - 181
+    - 297
+  - a3
+- !!python/tuple
+  - *id043
+  - *id044
+  - &id053 !!python/tuple
+    - 247
+    - 313
+  - *id052
+  - !!python/tuple
+    - 226
+    - 295
+  - b3
+- !!python/tuple
+  - *id044
+  - *id045
+  - &id054 !!python/tuple
+    - 293
+    - 311
+  - *id053
+  - !!python/tuple
+    - 270
+    - 292
+  - c3
+- !!python/tuple
+  - *id045
+  - *id046
+  - &id055 !!python/tuple
+    - 339
+    - 309
+  - *id054
+  - !!python/tuple
+    - 315
+    - 290
+  - d3
+- !!python/tuple
+  - *id046
+  - *id047
+  - &id056 !!python/tuple
+    - 384
+    - 306
+  - *id055
+  - !!python/tuple
+    - 359
+    - 288
+  - e3
+- !!python/tuple
+  - *id047
+  - *id048
+  - &id057 !!python/tuple
+    - 430
+    - 304
+  - *id056
+  - !!python/tuple
+    - 404
+    - 285
+  - f3
+- !!python/tuple
+  - *id048
+  - *id050
+  - &id059 !!python/tuple
+    - 474
+    - 301
+  - *id057
+  - !!python/tuple
+    - 448
+    - 283
+  - g3
+- !!python/tuple
+  - *id050
+  - *id058
+  - &id067 !!python/tuple
+    - 518
+    - 299
+  - *id059
+  - !!python/tuple
+    - 491
+    - 281
+  - h3
+- !!python/tuple
+  - *id060
+  - *id052
+  - &id061 !!python/tuple
+    - 198
+    - 359
+  - &id069 !!python/tuple
+    - 150
+    - 361
+  - !!python/tuple
+    - 176
+    - 338
+  - a2
+- !!python/tuple
+  - *id052
+  - *id053
+  - &id062 !!python/tuple
+    - 246
+    - 356
+  - *id061
+  - !!python/tuple
+    - 223
+    - 336
+  - b2
+- !!python/tuple
+  - *id053
+  - *id054
+  - &id063 !!python/tuple
+    - 294
+    - 354
+  - *id062
+  - !!python/tuple
+    - 270
+    - 333
+  - c2
+- !!python/tuple
+  - *id054
+  - *id055
+  - &id064 !!python/tuple
+    - 343
+    - 351
+  - *id063
+  - !!python/tuple
+    - 317
+    - 331
+  - d2
+- !!python/tuple
+  - *id055
+  - *id056
+  - &id065 !!python/tuple
+    - 390
+    - 349
+  - *id064
+  - !!python/tuple
+    - 364
+    - 328
+  - e2
+- !!python/tuple
+  - *id056
+  - *id057
+  - &id066 !!python/tuple
+    - 438
+    - 346
+  - *id065
+  - !!python/tuple
+    - 410
+    - 326
+  - f2
+- !!python/tuple
+  - *id057
+  - *id059
+  - &id068 !!python/tuple
+    - 485
+    - 344
+  - *id066
+  - !!python/tuple
+    - 456
+    - 323
+  - g2
+- !!python/tuple
+  - *id059
+  - *id067
+  - &id076 !!python/tuple
+    - 531
+    - 341
+  - *id068
+  - !!python/tuple
+    - 502
+    - 321
+  - h2
+- !!python/tuple
+  - *id069
+  - *id061
+  - &id070 !!python/tuple
+    - 194
+    - 406
+  - !!python/tuple
+    - 143
+    - 409
+  - !!python/tuple
+    - 171
+    - 383
+  - a1
+- !!python/tuple
+  - *id061
+  - *id062
+  - &id071 !!python/tuple
+    - 244
+    - 404
+  - *id070
+  - !!python/tuple
+    - 220
+    - 381
+  - b1
+- !!python/tuple
+  - *id062
+  - *id063
+  - &id072 !!python/tuple
+    - 294
+    - 401
+  - *id071
+  - !!python/tuple
+    - 269
+    - 378
+  - c1
+- !!python/tuple
+  - *id063
+  - *id064
+  - &id073 !!python/tuple
+    - 347
+    - 399
+  - *id072
+  - !!python/tuple
+    - 319
+    - 376
+  - d1
+- !!python/tuple
+  - *id064
+  - *id065
+  - &id074 !!python/tuple
+    - 397
+    - 396
+  - *id073
+  - !!python/tuple
+    - 369
+    - 373
+  - e1
+- !!python/tuple
+  - *id065
+  - *id066
+  - &id075 !!python/tuple
+    - 448
+    - 394
+  - *id074
+  - !!python/tuple
+    - 418
+    - 371
+  - f1
+- !!python/tuple
+  - *id066
+  - *id068
+  - &id077 !!python/tuple
+    - 497
+    - 391
+  - *id075
+  - !!python/tuple
+    - 467
+    - 368
+  - g1
+- !!python/tuple
+  - *id068
+  - *id076
+  - !!python/tuple
+    - 546
+    - 389
+  - *id077
+  - !!python/tuple
+    - 514
+    - 366
+  - h1
