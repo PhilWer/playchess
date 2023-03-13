@@ -3,13 +3,15 @@
 	<!-- ARGS -->
 	<!-- load the proper config file  -->
 	<arg name = "config" 	default = "standard" />
-	<arg name = "joystick"	default = "True" />		<!-- wheter using the Ottobock joystick or not -->
+	<arg name = "ready"		default = "False" /> 	<!-- wheter using a previous initialization or not -->
+	<arg name = "joystick"	default = "False" />	<!-- wheter using the Ottobock joystick or not -->
 	<arg name = "clock_btn" default = "False" />	<!-- wheter using an Arduino-controlled button to check for clock presses or not -->
 	<!-- Set the serial port parameters to connect to the Arduino board -->
 	<arg name = "port" 		default = "/dev/ttyUSB0" />
 	<arg name = "baud" 		default = "57600" />
 
 	<!-- PARAMS -->
+	<param name = "playchess/root"		type = "str" value = "$(find playchess)" />
 	<param name = "playchess/config" type = "str" value = "$(find playchess)/scripts/config/$(arg config)_config.yaml" />
 	<param name = "playchess/simul_config" type = "str" value = "$(find playchess)/config/simul_config.yaml" />
 	<param name = "playchess/simul_config_not_transformed" type = "str" value = "$(find playchess)/config/simul_config_not_transformed.yaml" />
@@ -28,14 +30,21 @@
 	<!-- NODES -->
 
 	<!-- launch the node to manage the different operational states -->
-	<node pkg = "playchess" type = "play_chess.py" name = "play_chess" required = "false" output = "screen"/>
+	<node pkg = "playchess" type = "play_chess.py" name = "play_chess" required = "false" output = "screen" args = "$(arg ready) $(arg joystick)"/>
 
 	<!-- launch the node to manage the joystick commands in the different operational states -->
-	<node pkg = "playchess" type = "joystick_command.py" name = "joystick_command" required = "false" output = "screen"/>
+	<node pkg = "playchess" type = "joystick_command.py" name = "joystick_command" 
+	required = "false" output = "screen" if = "$(arg joystick)"/>
 
 	<!-- launch the GUI -->
-	<node pkg = "playchess" type = "play_chess_gui.py" name = "play_chess_gui" required = "false" output = "screen"/>
-
+	<node pkg = "playchess" type = "play_chess_gui.py" name = "play_chess_gui" 
+	required = "false" output = "screen" unless = "$(arg ready)"/>
+	<!-- launch the GUI -->
+	<node pkg = "playchess" type = "play_chess_gui_pronto.py" name = "play_chess_gui" 
+	required = "false" output = "screen" if = "$(arg ready)"/>
+	<node pkg = "playchess" type = "CV_move_recognition.py" name = "CV" 
+	required = "false" output = "screen" if = "$(arg ready)"/> 
+	
 	<!-- launch the node to read the serial port connected to the pushbutton -->
 	<node pkg = "rosserial_python" type = "serial_node.py" name = "serial_node" 
 	args ="_port:=$(arg port) _baud:=$(arg baud)" required = "false" if = "$(arg clock_btn)"/>
