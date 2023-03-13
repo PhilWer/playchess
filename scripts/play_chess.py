@@ -15,7 +15,7 @@ import cv2
 import sys
 import yaml
 import math
-from time import time
+import time
 
 # Import ROS messages
 from geometry_msgs.msg import Quaternion, PointStamped, Pose, Point
@@ -563,7 +563,7 @@ class Playing:
                         clock_pose, z_coord_chessboard)
                     self.motions.click_clock(self.scene, clock_pose)
 
-            print('Move execution time: '+str(time() - tempo_mossa)+'s')
+            print('Move execution time: '+str(time.time() - tempo_mossa)+'s')
             rospy.sleep(5)  # TOVERIFY IF THIS WAITING TIME IS ENOUGH.
 
             # Change the status to the status of waiting for the pushbutton to be pressed, to start looking for the move made by the opponent.
@@ -1010,7 +1010,7 @@ if __name__ == '__main__':
 
             elif state.data == 13:  # State of move execution by TIAGo.
                 if move and chess_move_not_exectuted_yet:
-                    tempo_mossa = time()
+                    tempo_mossa = time.time()
                     player = Playing()
 
                     # Load the previously computed parameters
