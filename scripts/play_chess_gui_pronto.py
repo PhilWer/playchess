@@ -3160,6 +3160,7 @@ class ChessboardBlackWindow(QtWidgets.QWidget, Ui_Chessboard_Black):
     manual_mode = QtCore.pyqtSignal(int)
     back_to_game = QtCore.pyqtSignal(int)
     global update_flag
+    update_flag = False
 
     def __init__(self):
         super(ChessboardBlackWindow, self).__init__()
