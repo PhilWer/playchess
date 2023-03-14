@@ -295,12 +295,16 @@ class DepthProcessing:
         global analysis_not_done_yet
 
         # Understand which piece has been moved
+        start = time()
         moved_piece, start_square, end_square = self.move_identification(move
         )
+        end = time()
+        elapsed_time = end- start
 
         print('MOVED PIECE: ' + str(moved_piece))
         print('STARTING SQUARE: ' + str(start_square))
         print('ENDING SQUARE: ' + str(end_square))
+
 
         mv_folder = MOVES_DATA_DIR + '/move_{}'.format(self.move)
         # saving the recognized move
@@ -308,6 +312,7 @@ class DepthProcessing:
             file.write("moved piece:{}".format(str(moved_piece)))
             file.write("sratring square:{}".format(str(start_square)))
             file.write("moved piece: {}".format(str(end_square)))
+            file.write("time_taken_for_move_recognition:{}".format(str(elapsed_time)))
             
         # Send messages regarding the move executed by the opponent to change the GUI.
         rospy.loginfo('Publishing the opponent move...')
@@ -372,6 +377,7 @@ class DepthProcessing:
                 # Retrieve the depth data with depth_image = np.genfromtxt(mv_folder + '/depth_after.csv', delimiter=',')
             # Identify the move and broadcast messages accordingly
             self.identify_moved_piece(self.move)
+
 
         elif data.data == 50:
             # TODO. Verify if needed, then remove.
