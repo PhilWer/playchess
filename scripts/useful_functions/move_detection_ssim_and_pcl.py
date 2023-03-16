@@ -25,7 +25,7 @@ from useful_functions.depth_to_point_cloud_count import DepthImageProcessing
 # from useful_functions.homographic_transformation import HOMO_TRANSFOR as ht
 from useful_functions import config as cfg
 if __name__ =='__main__':
-    move=7
+    move=10
 PLAYCHESS_PKG_DIR = os.path.normpath(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..'))
 
 class OccupancyChecker:
@@ -467,20 +467,22 @@ class OccupancyChecker:
                 self.possible_start_square = temp_start_square.copy()
 
                 # to filter out start squre due to oclusion by comparing total no of points in empyt square as a whole
-                if len(self.possible_start_square) > 1: 
-                    dict_start = {}
+                if len(self.possible_start_square) > 1:
+                    max_v=0 
                     for i in self.possible_start_square:
                         square_name = i
-
                         for j in chessboard_square_corners:
                             if j[5] == square_name:
                                 #print(j)
                                 filter_points = np.array([j[0], j[1], j[2], j[3]])
                                 pcl_count, mean_rgb_value, occupancy = dip.depth_pcl_counting(
                                 depth_image_state2, state2_image, filter_points,move, quat=[-0.672, 0.680, -0.202, 0.214], trans=[0.232, 0.015, 1.315],min_dist=-7)
-                                dict_start[square_name]=pcl_count
+                                if max_v<(pcl_count):
+                                    max_v = pcl_count
+                                    new_cell = square_name
                                 print(i,pcl_count)
-                    self.possible_start_square = [max(dict_start)]
+                    self.possible_start_square = [new_cell]
+                    
             
 
 
