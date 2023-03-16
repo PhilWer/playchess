@@ -25,7 +25,7 @@ from useful_functions.depth_to_point_cloud_count import DepthImageProcessing
 # from useful_functions.homographic_transformation import HOMO_TRANSFOR as ht
 from useful_functions import config as cfg
 if __name__ =='__main__':
-    move=31
+    move=5
 PLAYCHESS_PKG_DIR = os.path.normpath(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..'))
 
 class OccupancyChecker:
@@ -109,17 +109,19 @@ class OccupancyChecker:
                 self.live_chessboard_situation_complete= yaml.load(live_file.read(), Loader=yaml.Loader)
             
 
-
+        
         if self.opposite_color == 'white' and all(cell in self.potential_altered_squares for cell in ['e1', 'f1', 'g1', 'h1']):
             for j in chessboard_square_corners:
-                if j[5] == 'e8':
+                if j[5] == 'e1':
                     filter_points = np.array([j[0], j[1], j[2], j[3]])
                     pcl_count, mean_rgb_value, occupancy = dip.depth_pcl_counting(
                         depth_image_state2, state2_image, filter_points,move, quat=[-0.672, 0.680, -0.202, 0.214], trans=[0.232, 0.015, 1.315])
                     #print('pcl-count', pcl_count)
+                    
                     if occupancy != True:
                         for k in chessboard_square_corners:
                             if k[5] == 'h1':
+                                
                                 filter_points = np.array(
                                     [k[0], k[1], k[2], k[3]])
                                 pcl_count, mean_rgb_value, occupancy = dip.depth_pcl_counting(
@@ -466,6 +468,7 @@ class OccupancyChecker:
                 dict_start = {}
                 for i in self.possible_start_square:
                     square_name = i
+                    
                     for j in chessboard_square_corners:
                         if j[5] == square_name:
                             #print(j)
@@ -473,6 +476,7 @@ class OccupancyChecker:
                             pcl_count, mean_rgb_value, occupancy = dip.depth_pcl_counting(
                             depth_image_state2, state2_image, filter_points,move, quat=[-0.672, 0.680, -0.202, 0.214], trans=[0.232, 0.015, 1.315],min_dist=-7)
                             dict_start[square_name]=pcl_count
+                            print(i,pcl_count)
                 self.possible_start_square = [max(dict_start)]
             
 
