@@ -25,7 +25,7 @@ from useful_functions.depth_to_point_cloud_count import DepthImageProcessing
 # from useful_functions.homographic_transformation import HOMO_TRANSFOR as ht
 from useful_functions import config as cfg
 if __name__ =='__main__':
-    move=10
+    move=19
 PLAYCHESS_PKG_DIR = os.path.normpath(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..'))
 
 class OccupancyChecker:
@@ -536,6 +536,9 @@ class OccupancyChecker:
                     elif a != self.possible_start_square[0]:
                         self.possible_end_square.append(a)
                         end = True
+
+            if len(self.possible_end_square) !=0:
+                self.possible_capture=[]
 
             #print('potential_squares are:',self.potential_altered_squares)
             
