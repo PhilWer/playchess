@@ -25,7 +25,7 @@ from useful_functions.depth_to_point_cloud_count import DepthImageProcessing
 # from useful_functions.homographic_transformation import HOMO_TRANSFOR as ht
 from useful_functions import config as cfg
 if __name__ =='__main__':
-    move=12
+    move=16
 PLAYCHESS_PKG_DIR = os.path.normpath(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..'))
 
 class OccupancyChecker:
@@ -446,9 +446,9 @@ class OccupancyChecker:
                     self.possible_end_square.append(current_square)
                 elif self.live_chessboard_situation_complete[current_square][1] == self.color:
                     self.possible_capture.append(current_square)
-            # print('self.possible_start_square:',self.possible_start_square)
-            #print('self.possible_capture_square:',self.possible_capture)
-            # print('self.possible_end_square:',self.possible_end_square)
+            print('self.possible_start_square:',self.possible_start_square)
+            print('self.possible_capture_square:',self.possible_capture)
+            print('self.possible_end_square:',self.possible_end_square)
 
             temp_start_square = self.possible_start_square.copy()
             if len(self.possible_start_square) >1:
@@ -544,8 +544,24 @@ class OccupancyChecker:
             print('self.possible_capture_square:',self.possible_capture)
 
             if len(self.possible_capture) !=0:
-                
-                self.possible_end_square =[]
+                tem_capture = self.possible_capture.copy()
+            if len(self.possible_capture)!=0:
+                for i in self.possible_capture:
+                    square_name = i
+                    for j in chessboard_square_corners:
+                        if j[5] == square_name:
+                            filter_points = np.array([j[0], j[1], j[2], j[3]])
+                            pcl_count, mean_rgb_value, occupancy = dip.depth_pcl_counting(
+                            depth_image_state2, state2_image, filter_points,move, quat=[-0.672, 0.680, -0.202, 0.214], trans=[0.232, 0.015, 1.315])
+                            if occupancy == True:
+                                if self.opposite_color == 'black' and mean_rgb_value >= 0.5:
+                                    tem_capture.remove(i)
+                                elif self.opposite_color == 'white' and mean_rgb_value < 0.5:
+                                    tem_capture.remove(i)
+                            #print(mean_rgb_value)
+                self.possible_capture = tem_capture.copy()
+                if len(self.possible_capture)!=0:
+                    self.possible_end_square =[]
 
             #print('potential_squares are:',self.potential_altered_squares)
             
