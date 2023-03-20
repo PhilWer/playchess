@@ -25,7 +25,7 @@ from useful_functions.depth_to_point_cloud_count import DepthImageProcessing
 # from useful_functions.homographic_transformation import HOMO_TRANSFOR as ht
 from useful_functions import config as cfg
 if __name__ =='__main__':
-    move=19
+    move=12
 PLAYCHESS_PKG_DIR = os.path.normpath(os.path.join(os.path.realpath(os.path.dirname(__file__)), '..', '..'))
 
 class OccupancyChecker:
@@ -447,7 +447,7 @@ class OccupancyChecker:
                 elif self.live_chessboard_situation_complete[current_square][1] == self.color:
                     self.possible_capture.append(current_square)
             # print('self.possible_start_square:',self.possible_start_square)
-            # print('self.possible_capture_square:',self.possible_capture)
+            #print('self.possible_capture_square:',self.possible_capture)
             # print('self.possible_end_square:',self.possible_end_square)
 
             temp_start_square = self.possible_start_square.copy()
@@ -482,6 +482,7 @@ class OccupancyChecker:
                                     new_cell = square_name
                                 print(i,pcl_count)
                     self.possible_start_square = [new_cell]
+            
                     
             
 
@@ -508,6 +509,7 @@ class OccupancyChecker:
                 #print(self.possible_end_square)
                 #exit()
 
+            
             tem_capture = self.possible_capture.copy()
             if len(self.possible_capture)>1:
                 for i in self.possible_capture:
@@ -524,6 +526,8 @@ class OccupancyChecker:
                                     tem_capture.remove(i)
                             #print(mean_rgb_value)
                 self.possible_capture = tem_capture.copy()
+            
+                
 
             if len(self.possible_start_square) == 0:
                 self.possible_start_square.append(self.potential_altered_squares[0])
@@ -536,9 +540,12 @@ class OccupancyChecker:
                     elif a != self.possible_start_square[0]:
                         self.possible_end_square.append(a)
                         end = True
+            
+            print('self.possible_capture_square:',self.possible_capture)
 
-            if len(self.possible_end_square) !=0:
-                self.possible_capture=[]
+            if len(self.possible_capture) !=0:
+                
+                self.possible_end_square =[]
 
             #print('potential_squares are:',self.potential_altered_squares)
             
