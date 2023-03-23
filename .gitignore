@@ -3,11 +3,14 @@ src/
 include/
 .vscode/
 tmp/
+data/
 *.yaml
 *.jpg
 *.png
 *.gif
 *pickle
+*.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
