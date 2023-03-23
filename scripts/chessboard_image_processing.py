@@ -693,7 +693,7 @@ class ImageProcessing():
             # Save data for reproducibility during test
             data_path = os.path.join(root, 'data', )
         
-        return rows, img_centers_labeled, img_contour_edge, len(squares), chessboard_vertices
+        return rows, img_centers_labeled, chessboard_vertices, len(squares), img_contour_edge
 
 
 if __name__ == "__main__":
